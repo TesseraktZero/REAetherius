@@ -1,0 +1,247 @@
+<link rel="icon" type="image/x-icon" href="logo.png">
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+    // Call populateCards function when the page is fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+
+        //modal~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        const modal = document.getElementById("myModal");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        const modalImg = document.getElementById("modalImg");
+        const modalDescription = document.getElementById("modalDescription");
+        const cardContainer = document.getElementById("cardDisplay");
+        const basePath = "cards/";
+
+        // Function to open modal with card details
+        function openModal(card) {
+            // Set image source and other card details
+            modalImg.src = `${basePath}${card.folder}/${card.id}.png`;
+            //modal content here
+            modalDescription.innerHTML = `
+            <table class="table custom-table">
+                <tbody>
+                    <tr>
+                        <th colspan="2" class="h2">${card.name}<br>${card.subName}</th>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Level</th>
+                        <td class="h4">${card.level}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Mana Cost</th>
+                        <td class="h4">${card.Cost}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Terrain Suitability</th>
+                        <td class="h4">${card.terrain}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Common Trait</th>
+                        <td class="h4">${card.trait}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Combat Power</th>
+                        <td class="h4">${card.power}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Ability</th>
+                        <td class="h4">${card.description}</td>
+                    </tr>
+                </tbody>
+            </table>
+            `;
+          // Display the modal
+          modal.style.display = "block";
+        }
+
+        // Close modal when close button is clicked
+        closeBtn.onclick = function() {
+          modal.style.display = "none";
+        };
+
+        // Close modal when user clicks outside the modal content
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+
+        //modal end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // Card data here
+        const cardData = [
+        { id: "PI001", name: "", subName: "Fang Dagger (Hound/ Wolf)", level: "2", Cost: "2P", folder: "PurpleItems", type: "Item", terrain: "", trait: "", power: "+2-0-0", description: "Self Damage Phase: (2P) ▷ Target player > Receives 1 damage per your Fides in the same Battle-area of this card (Max.6)" },
+        { id: "PI002", name: "", subName: "Holy Water (Priest)", level: "2", Cost: "1P", folder: "PurpleItems", type: "Item", terrain: "", trait: "", power: "0-0-0", description: "Any Battle Phase: (2P) > Target non-Ace Fides in the same Battle-area of this card ▷ Lose all Text > Trash this card" },
+        { id: "PI003", name: "", subName: "Mystic Nullstone (Mech)", level: "2", Cost: "2P", folder: "PurpleItems", type: "Item", terrain: "", trait: "", power: "0-0-0", description: "1. S: This card linked to any Fides 2. A: Target non-Fides card > Lose all Text " },
+        { id: "PI004", name: "", subName: "Arcane Gatling Gun (Gunner)", level: "3", Cost: "2P", folder: "PurpleItems", type: "Item", terrain: "", trait: "Overwhelming ", power: "0-2-0", description: "1. Any Damage Phase: (2) ▷ Target Enemy Fides in the same Battle-area of this card > Health Fix at 1 Until the end of turn > Destroy this card at the end of turn > You draw 1 card at the end of turn 2. C: When equipped Fides deals Battle damage to player > Target Fides > Gains 1 -1 Power Token" },
+        { id: "PI005", name: "Fulgurnox", subName: "(Jupiter)", level: "3", Cost: "2P", folder: "PurpleItems", type: "Item", terrain: "", trait: "", power: "+2-0-0", description: "Self Attack Phase: (1P) > Target Fides ▷ Loses 1 Zap Token > Move to the same Battle-area of this card of its side at any position" },
+        { id: "PI006", name: "Gale", subName: "Averial Short Blades (Averial/ Tsurugi)", level: "3", Cost: "2P/R", folder: "PurpleItems", type: "Item", terrain: "", trait: "Flexible", power: "+2-0-0", description: "1. A: Target Enemy Fides in Battle-area > That Enemy player Fides or All other Enemy Fides in the same Battle-area of that Fides > Move back to their Summon-area 2. P: If equipped Fides is Tsurugi > This card count as 2 Set-card" },
+        { id: "PI007", name: "", subName: "Blessed Shield (All Fides) ", level: "2", Cost: "1P", folder: "PurpleItems", type: "Item", terrain: "", trait: "", power: "0-0-+1", description: "1. P: White card require (3) more to target this card and Equipped Fides 2. Self Damage Phase: (1P) ▷ If this card in Battle-area > Trash two card in any 1 Graveyard" },
+        { id: "PA001", name: "Code: Analysis", subName: "", level: "2", Cost: "2P", folder: "PurpleItems", type: "Aura", terrain: "", trait: "Flexible", power: "", description: "1. A: Target Enemy player >reveals his hand > You choose 1 card from that player hand to discard >That Enemy player draws 1 card 2: Anytime(Self) ▷ You Scry(1) > You may heal 1 " },
+        { id: "PA002", name: "Code: Vigilance", subName: "", level: "2", Cost: "2P", folder: "PurpleItems", type: "Aura", terrain: "", trait: "Supply(1)/ Flexible", power: "", description: "A: Target Enemy Summoning card that has a copy in that enemy Graveyard or Mana > Counter" },
+        { id: "PA003", name: "Astrology", subName: "", level: "3", Cost: "1P", folder: "PurpleItems", type: "Aura", terrain: "", trait: "", power: "", description: "A: Look at the top 5 card from your Deck > Rearrange them in any order, You may put cards under your deck > Your Ace gains 1 +1 Power Token 2. C: When you start turn > You Scry(1)" },
+        { id: "PA004", name: "Caesaropapism", subName: "", level: "3", Cost: "2P", folder: "PurpleItems", type: "Aura", terrain: "", trait: "", power: "", description: "1. P: Your Deity Ace all power +1 per Fides with power-spot you control (Max.5) 2. C: When your Ace destroys and leaves play > You receive 5 damage" },
+        { id: "PA005", name: "Ultimate Code: Tempest", subName: "", level: "3", Cost: "3P", folder: "PurpleItems", type: "Aura", terrain: "", trait: "Flexible", power: "", description: "1. A: Target Fides with 4- Health in Battle-area > Return to its owner hand 2. P: Enemy Fides in the same Battle-area with 2+ your Mech Fides all power -1" },
+        { id: "PA006", name: "Ultimate Code: Raging Strike", subName: "", level: "6", Cost: "4P", folder: "PurpleItems", type: "Aura", terrain: "", trait: "", power: "", description: "1. A: All your Fides use their Melee power instead of Ranged power to deal Battle damage in this turn > +1 Melee power until the end of turn 2. P: If the game is in Stage II and Your Ace Hound is in Play > All your Fides Gain Overwhelming and +1 Melee power" },
+        { id: "PA007", name: "Code: Obstruct", subName: "", level: "2", Cost: "2P", folder: "PurpleItems", type: "Aura", terrain: "", trait: "Flexible", power: "", description: "1. A: Target Summoning Event > Counter > Return to its owner hand 2. C: When a player's Event enter play > Unless that player (2) > That player receives 2 damage > You heal 1 " },
+        { id: "PA008", name: "Divine Power Enchantment", subName: "", level: "3", Cost: "2P", folder: "PurpleItems", type: "Aura", terrain: "", trait: "", power: "", description: "C: When your Spell card enter play > You may (Self) and (1P)(Faith) > Target Fides > Receives 4 damage" },
+        { id: "PA009", name: "Draconium Frame", subName: "", level: "3", Cost: "2P", folder: "PurpleItems", type: "Aura", terrain: "", trait: "", power: "", description: "1. Any Attack Phase: (xR) ▷ All your Fides +x Health until the end of turn 2. P: All your Mech Fides +1 Health" },
+        { id: "PA010", name: "Power is Power", subName: "", level: "3", Cost: "2P", folder: "PurpleItems", type: "Aura", terrain: "", trait: "", power: "", description: "1. A: All Fides in Battle-area with Overwhelming +2 Melee power +2 Health 2. Any Battle Phase: (1G) ▷ Target Fides > Gains 1 Overwhelming until the end of turn" },
+        { id: "PE001", name: "", subName: "Trinity", level: "1", Cost: "1P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Anytime: If you control 3+ Priest Fides > Target Summoning card > Counter > You draw 1 card" },
+        { id: "PE002", name: "", subName: "High-speed Data Analysis", level: "2", Cost: "1P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target Fides in Battle-area ▷ All Power +4 until the end of turn" },
+        { id: "PE003", name: "", subName: "Sabotaging Hacking", level: "2", Cost: "2P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Self Turn: Target your Fides ▷ Discard 1 Carrying card > Target player > You look at the top 5 cards of that player deck and then put back at any order > That player discard 2 card from the top of his deck > You draw 1 card" },
+        { id: "PE004", name: "", subName: "Accelerating Manufacture", level: "3", Cost: "2P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Anytime: Execute 2 2/1/2 Terminal Token with G-A for free > Target your Unit Fides > Tap > You draw 1 card" },
+        { id: "PE005", name: "", subName: "Blood Hunt", level: "3", Cost: "2P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Self Attack Turn: Target Enemy non-Ace Fides ▷ Must Block if able in this turn > If destroyed later in this turn > You draw 1 card > You heal 4 2. S: If the game is in Stage II and your Ace Hound is in play > This card lose all (non-Ace) symbol in the Text" },
+        { id: "PE006", name: "", subName: "Dimensionality Reduction", level: "3", Cost: "2P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Anytime: Target Level 3- Summoning card > Counter > Trash this card" },
+        { id: "PE007", name: "", subName: "Parts Standardisation", level: "3", Cost: "2P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Self Attack Phase: If you control less Mana than any Enemy player > Take the top 3 cards from your deck > You may execute 1 Mana from those card > Discard the rest > You draw 1 card" },
+        { id: "PE008", name: "", subName: "Spell: Shock", level: "3", Cost: "2P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target Fides ▷ Gains 1 Zap Token > Melee Power and Ranged Power fix at 0 until the end of turn" },
+        { id: "PE009", name: "", subName: "Spell: Weakening Charge", level: "3", Cost: "1P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Distribute 3 Zap Tokens to any Fides, this turn, Fides -1 Health for each Zap Token they are carrying" },
+        { id: "PE010", name: "", subName: "Persuasive Preaching", level: "4", Cost: "2P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Self Prepare Phase: If you control 1+ Priest or Holy Fides > Target Level 3- enemy non-Ace Fides > Move to your Summon-area > Untap" },
+        { id: "PE011", name: "", subName: "Amazing Grace", level: "6", Cost: "3P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Self Turn: You draw 2 cards > You heal 6" },
+        { id: "PE012", name: "", subName: "Heresy!", level: "6", Cost: "3P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Self Battle Phase: Target Fides > Destroy > If that Fides is not Blue, Purple, Yellow > You draw 1 card" },
+        { id: "PE013", name: "", subName: "Waltz of Sword", level: "6", Cost: "4P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Damage Phase: If your Mech Fides in Battle-area > Target Fides in Battle-area > Receives 3 damage > Target Fides in Summon-area > Receives 4 damage > Target Fides > Receives 5 damage > If the game is in Stage II and Your Ace Tsurugi is in play > You may discard 1 Carrying card from your Ace > Target Fides > Receives 6 damage" },
+        { id: "PE014", name: "", subName: "Deity's Wrath", level: "12", Cost: "9P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "1. S: This card Level -1 Mana-cost -1 per Zap Token in play 2. Any Battle Phase: All non-Ace Fides with Zap Token destroy > If the game is in Stage II and your Ace Jupiter is in play > Target player > Receives 6 damage" },
+        { id: "PE015", name: "", subName: "Faster than you", level: "1", Cost: "1P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Self Attack Phase: If your Fides with Swift in Battle-area > All Enemy Fides with Swift > Tap" },
+        { id: "PE016", name: "", subName: "Heaven's Call", level: "1", Cost: "1P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target Fides ▷ If that Fides recovered in this turn > Trash > You draw 1 card" },
+        { id: "PE017", name: "", subName: "Devine Right of Kings", level: "3", Cost: "2P", folder: "PurpleItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target Fides ▷ if (that Fides) in the same Battle-area with Empire, Duchy, or Fabriazzo Fides > That Fides return to its owner hand" },
+        ];
+
+        // Loop through cardData and create card elements with image paths
+        cardData.forEach(card => {
+            const imagePath = `${basePath}${card.folder}/${card.id}.png`; // Construct image path
+            const cardHtml = `
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                <div class="card-container">
+                    <div class="card">
+                        <button class="card-button">
+                            <img src="${imagePath}" class="card-img-top" alt="${card.name}">
+                            <div class="card-text">
+                                <p>${card.description}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            // Append card HTML to card container
+            cardContainer.innerHTML += cardHtml;
+        });
+
+        // Add hover behavior to each card image
+        const cardContainers = document.querySelectorAll(".card-container");
+        const cardImages = document.querySelectorAll(".card-button");
+        cardContainers.forEach(container => {
+            const cardText = container.querySelector(".card-text");
+            //const cardText = image.nextElementSibling; // Get the card-text element (sibling of the image)
+
+            // Show card text on image hover
+            container.addEventListener("mouseenter", () => {
+                cardText.style.opacity = "1";
+                cardText.style.zIndex = "1";
+            });
+
+            // Hide card text when mouse leaves the image
+            container.addEventListener("mouseleave", () => {
+                cardText.style.opacity = "0";
+                cardText.style.zIndex = "0";
+            });
+
+            container.addEventListener("click", () => {
+            const cardIndex = Array.from(cardContainers).indexOf(container); // Get the index of the clicked card
+            const selectedCard = cardData[cardIndex]; // Get the corresponding card data
+            openModal(selectedCard); // Open modal with selected card data
+            });
+        });
+
+        ScrollReveal().reveal(cardContainers, { interval: 20, reset: true });
+    });
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>-RE- AETHERIUS</title>
+    </head>
+    <body style="background-color: #f7edcf;">
+
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
+    <a class="navbar-brand" href="https://recardgame.wordpress.com/"><img src="logo.png" alt="Logo" style="width: 30px; height: 30px;">  -RE- AETHERIUS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav"></ul>
+    </div>
+</nav>
+
+<!-- Banner Area -->
+<div class="container-fluid" style="padding-top: 59px;">
+    <div class="row">
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-blue" href="./BlueItems.html"><span class="hover-text">Blue</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-green" href="./GreenItems.html"><span class="hover-text">Green</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-purple" href="./PurpleItems.html"><span class="hover-text">Purple</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-red" href="./RedItems.html"><span class="hover-text">Red</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-white" href="./WhiteItems.html"><span class="hover-text">White</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-yellow" href="./YellowItems.html"><span class="hover-text">Yellow</span></a>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="container-fluid">
+    <!-- Sub-class buttons-->
+    <div class="d-flex justify-content-center align-items-center vh-20">
+        <h1 class="d-flex gap-2 button-container">
+            <a href="./PurpleFides.html" class="hvr-underline-from-center">FIDES</a>
+            <a href="./PurpleItems.html" class="hvr-underline-from-center selected">ITEMS</a>
+        </h1>
+    </div>
+    <div class="row" id="cardDisplay">
+        <!-- Card display area will be dynamically populated here -->
+        <!-- Example: -->
+        <!-- <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card Sub-Name</h6>
+                    <p class="card-text">Card Description</p>
+                    <!-- Add more card details here -->
+                <!-- </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<div id="myModal" class="modal" >
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="background-color: #f7edcf;">
+            <div class="row">
+                <div class="col-md-6">
+                    <img id="modalImg" src="" alt="Card Image" class="img-fluid">
+                </div>
+                <div class="col-md-6" id="modalDescriptionWindow">
+                  <!-- Detailed card description will be displayed here -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-description py-4 px-4" id="modalDescription">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

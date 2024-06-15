@@ -1,0 +1,155 @@
+.card-container {
+    position: relative;
+    display: inline-block;
+}
+
+.card-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Cover the entire card container */
+    height: 50%; /* Cover the entire card container */
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent background */
+    border: 1px solid #ccc;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease; /* Smooth opacity transition */
+    z-index: 0; /* Ensure the text appears above the card */
+}
+
+.card-button {
+    /* Style the button to look like an image */
+    border: none;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.card-container:hover .card-text {
+    opacity: 1; /* Fade in the text on hover */
+}
+
+.custom-table tbody,
+.custom-table th,
+.custom-table td {
+border: 2px solid #c9c0a1;
+}
+
+/* Background color for left column */
+.custom-table tbody th:first-child {
+background-color: #EDE0B9; /* Change this to your desired background color */
+}
+.custom-table tbody td {
+background-color: #F9ECC3; /* Change this to your desired background color */
+}
+
+/*buttons*/
+.button-container {
+    display: flex;
+    gap: 40px;
+}
+.button-container a {
+    text-decoration: none;
+    color: black;
+    font-size: 36px;
+}
+.button-container a.selected {
+    text-decoration: underline;
+    text-decoration-color: #007bff;
+    font-size: 36px;
+}
+.button-container a:hover {
+    text-decoration: none;
+}
+
+/*banner*/
+.banner-section {
+    text-align: center;
+    padding: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px; /* Adjust the height as needed */
+    text-decoration: none; /* Remove default underline */
+    overflow: hidden; /* Hide overflow for scaling effect */
+}
+
+.banner-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120%;
+    height: 120%;
+    background-size: cover; /* Cover the entire container */
+    transition: background-color 0.3s,transform 0.3s; /* Smooth transition for the scale effect */
+    z-index: -1; /* Place the pseudo-element behind the content */
+}
+
+/* Hover effect for background image */
+.banner-section:hover::before {
+    transform: scale(1.1); /* Scale up the image by 10% on hover */
+}
+
+/* Banner Button Styles */
+.banner-button {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    font-size: 1.5rem; /* Adjust the font size as needed */
+    padding: 0;
+    margin: 0;
+    text-decoration: none; /* Remove default underline */
+}
+
+.banner-blue::before {
+    background-image: url('cards/Blue.png');
+    width: 100%;
+}
+
+.banner-green::before {
+    background-image: url('cards/Green.png');
+    width: 100%;
+}
+
+.banner-purple::before {
+    background-image: url('cards/Purple.png');
+    width: 100%;
+}
+
+.banner-red::before {
+    background-image: url('cards/Red.png');
+    width: 100%;
+}
+
+.banner-white::before {
+    background-image: url('cards/White.png');
+    width: 100%;
+}
+
+.banner-yellow::before {
+    background-image: url('cards/Yellow.png');
+    width: 100%;
+}
+
+.hover-text {
+    /*visibility: hidden; /* Hide the text */
+    /*opacity: 0; /* Make the text transparent */
+    /* transition: visibility 0s, opacity 0.5s linear, font-size 0.5s; Smooth transition for visibility, opacity, and font-size */
+    font-size: 48px; /* Initial font size */
+    font-weight: 500;
+
+        text-shadow:
+        -1px -1px 0 hsl(229, 22%, 90%),
+         1px -1px 0 hsl(229, 22%, 90%),
+        -1px  1px 0 hsl(229, 22%, 90%),
+         1px  1px 0 hsl(229, 22%, 90%);
+}
+
+.banner-section:hover .hover-text {
+    /*visibility: visible; /* Show the text */
+    /*opacity: 1; /* Make the text visible */
+    font-size: 48px; /* Increase font size on hover */
+    font-weight: 500;
+}

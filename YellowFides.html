@@ -1,0 +1,251 @@
+<link rel="icon" type="image/x-icon" href="logo.png">
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+    // Call populateCards function when the page is fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+
+        //modal~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        const modal = document.getElementById("myModal");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        const modalImg = document.getElementById("modalImg");
+        const modalDescription = document.getElementById("modalDescription");
+        const cardContainer = document.getElementById("cardDisplay");
+        const basePath = "cards/";
+
+        // Function to open modal with card details
+        function openModal(card) {
+            // Set image source and other card details
+            modalImg.src = `${basePath}${card.folder}/${card.id}.png`;
+            //modal content here
+            modalDescription.innerHTML = `
+            <table class="table custom-table">
+                <tbody>
+                    <tr>
+                        <th colspan="2" class="h2">${card.name}<br>${card.subName}</th>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Level</th>
+                        <td class="h4">${card.level}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Mana Cost</th>
+                        <td class="h4">${card.Cost}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Terrain Suitability</th>
+                        <td class="h4">${card.terrain}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Common Trait</th>
+                        <td class="h4">${card.trait}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Combat Power</th>
+                        <td class="h4">${card.power}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Ability</th>
+                        <td class="h4">${card.description}</td>
+                    </tr>
+                </tbody>
+            </table>
+            `;
+          // Display the modal
+          modal.style.display = "block";
+        }
+
+        // Close modal when close button is clicked
+        closeBtn.onclick = function() {
+          modal.style.display = "none";
+        };
+
+        // Close modal when user clicks outside the modal content
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+
+        //modal end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // Card data here
+        const cardData = [
+        { id: "YF001", name: "Alice", subName: "Bōkensha- Jester", level: "1", Cost: "1Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Level-up", power: "0-1-2", description: "C: When this card deals battle damage to player > You may (1Y) > That player put 1 card from this hand to your Trophy area" },
+        { id: "YF002", name: "Coco", subName: "Guild Receptionist", level: "1", Cost: "1Y", folder: "YellowFides", type: "Fides", terrain: "G", trait: "Level-up/ Supply(1)", power: "0-0-2", description: "Self Prepare Phase: (1Y) ▷ Discard a Bōkensha card from your hand > You draw 2 card > You heal 3" },
+        { id: "YF003", name: "", subName: "Common Empire Soldier", level: "1", Cost: "1Y", folder: "YellowFides", type: "Fides", terrain: "G", trait: "", power: "1-1-1", description: "1. A: You receive 2 damage > You execute 2 Soldier Tokens 2. A: You draw 1 card at the end of turn" },
+        { id: "YF004", name: "Emby", subName: "Icarus's Dragon Servant Pet", level: "1", Cost: "1Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Swift", power: "1-1-1", description: "1. A: You draw 1 card at the end of turn 2. C: When your Fides Trophy > You may (1) > You Trophy(1) > this card lose this text until the end of turn" },
+        { id: "YF005", name: "Sesame", subName: "Stray Cat", level: "1", Cost: "1Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Blitz", power: "2-0-1", description: "1. A: You draw 1 card at the end of turn 2. C: When this card deals battle damage to player > Target enemy non-Fides card > Destroy" },
+        { id: "YF006", name: "Barracks", subName: "Empire Construction", level: "2", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "", trait: "Power-spot/ Supply(1)", power: "0-0-4", description: "1. A: You receive 2 damage > You execute 2 Soldier Tokens 2. Self Prepare Phase: (1) ▷ Target your Fides > Tap > You execute x Solider Token (x=Mana-cost of that Fides)" },
+        { id: "YF007", name: "", subName: "Empire Soldier- Field Drummers", level: "2", Cost: "1Y", folder: "YellowFides", type: "Fides", terrain: "G", trait: "", power: "0-0-2", description: "1. A: You receive 2 damage > You execite 2 Soldier Token 2. Any Battle Phase (1Y) > If this card in Battle-area > Destroy this card > All your Fides in the same Battle-area of this card all power +1 until the end of turn > This card return to its owner hand" },
+        { id: "YF008", name: "", subName: "Empire Soldier- Logistic Corps", level: "2", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G", trait: "Supply(1)", power: "0-1-2", description: "1. Anytime: (0) ▷ Destroy this card > Untap 3 your Mana 2. C: When you end turn > You heal 2 " },
+        { id: "YF009", name: "Hayato", subName: "Bōkensha- Elf Scout", level: "2", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Flexible/ Level-up", power: "1-2-2", description: "A: You discard 1 card from the top of your Damage pile or Trophy area > Target Level x- non-Ace card > Lose all text until the end of turn > You Trophy(1)" },
+        { id: "YF010", name: "Leon", subName: "Bōkensha- Shieldbearer", level: "2", Cost: "1Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Level-up", power: "2-0-4", description: "1. P: Fides right behind this card in Battle-line use its Melee power instead of Ranged power tp deal battle damage 2. C: When this card receive battle damage > You Trophy(1) > You heal 2 " },
+        { id: "YF011", name: "Royal Library", subName: "Empire Construction", level: "2", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "", trait: "Power-spot", power: "0-0-4", description: "1. A: Tap this card > You Trophy(1) 2. C: When your Empire Fides deals battle damage to player > You may (Self) > You Trophy(1) > You heal 2" },
+        { id: "YF012", name: "Swadoeve", subName: "Construction- Dwarf Smith", level: "2", Cost: "1Y", folder: "YellowFides", type: "Fides", terrain: "", trait: "Power-spot/ Supply(1)", power: "0-0-4", description: "1. Self Prepare Phase: (1Y) ▷ Target Your Fides > Equip 1 card from your hand as a 0-0-0 Item > You draw 1 card 2. P: All your Item all power +1" },
+        { id: "YF013", name: "Conard", subName: "Bōkensha- Warrior", level: "3", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G", trait: "Level-up/ Overwhelming/ Blitz", power: "4-0-3", description: "1. Any Battle phase: (1) ▷ If this card in Battle-area > this card +3 Melee power +3 Health until the end of turn > You Trophy(1) > This card returns to the top of its owner Damage pile at the end of turn" },
+        { id: "YF014", name: "Eis", subName: "Bōkensha- Elemental Sorcerer", level: "3", Cost: "2B/Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Shield(1)/ Flexible/ Level-up", power: "0-2-3", description: "1. A: Target Tap-ed Fides > Gains 1 Frost Token > You Trophy(1) 2. C: When this card deals battle damage > Target Fides > Gains 1 Frost Token > You heal 2" },
+        { id: "YF015", name: "", subName: "Empire Soldier- Common Archer", level: "3", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G", trait: "", power: "1-1-1", description: "1. A: You receive 2 damage > You execute 2 Soldier Tokens 2. Any Battle Phase: (1Y) ▷ If this card in Battle-area > Destroy this card > This card return to its owner hand > Choose 1 Effect: 1. Target Fides in Battle-area > Receive 3 damage 2. Target 1-3 Fides in Battle area > receive 1 damage" },
+        { id: "YF016", name: "Icarus", subName: "Bōkensha- Averial Swordsman", level: "3", Cost: "2R/Y", folder: "YellowFides", type: "Fides", terrain: "A", trait: "Level-up/ Flexible/ Swift", power: "3-0-3", description: "1. A: Target Fides > Gains Shield(2) until the end of turn > You heal 3 2. C: When this card deals battle damage to player > You Trophy(1) > You heal 3" },
+        { id: "YF017", name: "Kiri", subName: "Bōkensha- Saboteur", level: "3", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Level-up/ Deathtouch/ Flexible", power: "3-1-2", description: "1. Enemy Damage Phase: (1) ▷ If this card in Battle-area > Target non-Fides card > Destroy > You Trophy(1) 2. Self Damage Phase: (1) ▷ If this card in Battle-area > Target Construction Fides > Destroy > You Trophy(1)" },
+        { id: "YF018", name: "Royal Armory", subName: "Empire Construction", level: "3", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "", trait: "Power-spot", power: "0-0-4", description: "1. A: Take 1 Item from any graveyard to your Trophy area 2. P: All your Item all power +1" },
+        { id: "YF019", name: "Sofia", subName: "Empire Princess", level: "3", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G", trait: "", power: "0-1-3", description: "1. Anytime: (1) ▷ Target your non-Ace Fides > Trash > This card +3 Health until the end of turn C: When you end turn > You draw 1 > You Heal 3 3. C: This card leaves play > You receive 4 damage > Target enemy player > Execute this card for free" },
+        { id: "YF020", name: "Alice", subName: "-The Fool Bōkensha- Jester", level: "4", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Mageward(1)/ Level-up", power: "0-2-3", description: "1. A: If this card in Battle-area > Target enemy player > You exchange 1 Mana with that enemy player (Both Mana are chosen by you) > You Trophy(1) 2. C: When this card deals battle damage to player > You may (1Y) > Target Enemy Aura > Move to your Summon-area > This card returns to the top of its owner Damage pile" },
+        { id: "YF021", name: "Alphonse", subName: "Empire General", level: "4", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G", trait: "Blitz", power: "4-0-4", description: "1. Any Attack Phase(Pre-Default Action): (1) ▷ A Battle-Area Change to G Battle-Area until the end of turn 2. C: When your General Fides deals battle damage > You may (Self) > You receive 1 damage > You Execute 3 Soldier Tokens > If that Fides deals battle damage to player > You draw 1 card" },
+        { id: "YF022", name: "", subName: "Empire Soldier Cavalry", level: "4", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G", trait: "Blitz", power: "3-0-3", description: "1. A: You receive 2 damage > You execute 3 Soldier Tokens 2. Any Battle Phase: (1Y) ▷ If this card in Battle-area > Destroy this card > This card returns to its owner hand > Target enemy Fides in the same Battle-area of this card > Loses all Common-trait until the end of turn" },
+        { id: "YF023", name: "", subName: "Empire Soldier Chariot", level: "4", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G", trait: "Flexible/ Overwhelming", power: "4-2-4", description: "A: Target Fides in G Battle-area > receives 3 damage > Move this card to G Battle-area at any position of your side" },
+        { id: "YF024", name: "", subName: "Empire Soldier Dragon Knight", level: "4", Cost: "3Y", folder: "YellowFides", type: "Fides", terrain: "A", trait: "Swift/ Flexible", power: "3-2-3", description: "1. A: Target Fides> receives 4 damage 2. C: When this card leaves play > You execute 1 Soldier Token" },
+        { id: "YF025", name: "Luka", subName: "Bōkensha- Swordsman", level: "4", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Level-up/ Blitz", power: "4-0-4", description: "C: When this card deals battle damage in your turn > You Trophy(1) > You may (2) > Target Fides in Summon-area > Receives 4 damage" },
+        { id: "YF026", name: "Sebastian", subName: "Bōkensha- Warrior Instructor", level: "4", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Level-up/ Shield(1)/ Wall", power: "5-0-5", description: "1. A: Target non-Ace Fides(not this card) > Gain 1 +1 Power Token > You Trophy(1) 2. Self Prepare Phase: (2Y) ▷ You discard 1 card from your Trophy area > Target non-Ace Fides(not this card) > Gain 2 +1 Power Token" },
+        { id: "YF027", name: "Constantine III", subName: "The Emperor & Empire General", level: "5", Cost: "3Y", folder: "YellowFides", type: "Fides", terrain: "G", trait: "", power: "4-2-4", description: "1. C: When you end turn > You execute 2 Soldier Tokens > You may receive 2 damage > You execute 2 Soldier Tokens" },
+        { id: "YF028", name: "Henry", subName: "Empire General", level: "5", Cost: "2Y", folder: "YellowFides", type: "Fides", terrain: "G", trait: "", power: "5-2-5", description: "P: All your General Fides and Empire Construction Fides Gain the following Text: [Enemy Untap Phase: (0) ▷ Target 4 your Fides > Tap > Target Enemy > (1) > You heal 2" },
+        { id: "YF029", name: "Icarus", subName: "-Sentinel Bōkensha- Averial Swordsman", level: "5", Cost: "3R/Y", folder: "YellowFides", type: "Fides", terrain: "A", trait: "Level-up/ Flexible/ Swift", power: "5-0-5", description: "1. A: Targer card > Recover > You Trophy(1) 2. Any Defence Phase(Post-Default Action): (1Y) ▷ Move this card to the front of 1 of your Battle > You heal 4 > This card return to top of its owner Damage pile at the end of turn" },
+        { id: "YF030", name: "Jena", subName: "Empire Royal Illusion Sorcerer", level: "5", Cost: "3B/Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Shield(1)/ Flexible", power: "2-3-5", description: "1. A: Execute 1 Dragon Token with 7/0/7 and G-A 2. P: Your Dragon Token cannot deal battle-damage to player 3. C: When this card leaves play > Trash all your Dragon Token " },
+        { id: "YF031", name: "Kiri", subName: "-Shirigami Bōkensha- Saboteur", level: "6", Cost: "3Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Level-up/ Deathtouch", power: "8-0-4", description: "1. A: This card gains Swift and gains Indestructible until the end of turn 2. C: When this card deals battle damage to player > You may (1) > That player randomly discard 1 card > You may (0) > That player randomly discard 1 card > This card returns to the top of its owner deck at the end of turn" },
+        { id: "YF032", name: "Leon", subName: "-Aegis Bōkensha- Shieldbearer", level: "6", Cost: "3Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Mageward(2)/ Flexible", power: "4-0-8", description: "1. A: Target Fides > +5 Health until the end of turn > You heal 4 2. Any Battle Phase: (3Y) > You discard 1 card from your Trophy area ▷ If this card in Battle-area > You cannot receive any battle damage in this turn > Trash this card" },
+        { id: "YF033", name: "Luka", subName: "-Akai Tsuki Bōkensha- Swordsman", level: "6", Cost: "3Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Level-up/ First strike/ Blitz", power: "6-0-6", description: "1. A: If this card in Battle-area > Target non-Ace Fides > Destroy 2. C: When this card deals battle damage to player > Target Fides > Receives 3 damage > You heal 3" },
+        { id: "YF034", name: "Steven & Kain", subName: "Empire Dragon Knight General", level: "6", Cost: "3Y", folder: "YellowFides", type: "Fides", terrain: "A", trait: "Flexible/ Swift", power: "5-2-5", description: "1. Any Battle Phase: (1) ▷ Move this card to a Battle-area at any position of your side 2. When this card enters a Battle-area > Target enemy Fides > Receives 2 damage" },
+        { id: "YF035", name: "Ricky", subName: "-Iron Fists Apex Bōkensha- Warrior", level: "7", Cost: "3Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Level-up/ Flexible/ Overwhelming", power: "8-0-6", description: "1. A: Target Fides in Battle-area > Move back to its Summon-area > player who control that Fides > Receives x damage  (x=Health of that Fides)(Max.10) 2. Any Battle Phase: (1Y) ▷ Discard 1 Tactics card from your Hand > This card +6 Melee power until the end of turn" },
+        { id: "YF036", name: "Shura", subName: "-Legend of Blades Apex Bōkensha- Warrior", level: "7", Cost: "3Y", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "Level-up/ Flexible/ Blitz", power: "7-3-7", description: "1. A: Target Summoning card > Counter 2. Any Battle Phase: (2) ▷ Target Leading Fides in the same Battle-area of this card > Receives 3 Piercing damage Twice > You may (1) > That Fides receives 3 Piercing damage Twice > This card return to the top of its owner Damage pile until the end of turn" },
+        { id: "YF037", name: "Lily", subName: "Rabbit Servant Pet", level: "1", Cost: "1Y ", folder: "YellowFides", type: "Fides", terrain: "G-A", trait: "", power: "", description: "1. Self Prepare Phase: (Self) ▷ This card gains 1 Poison Token 2. Any Battle Phase: (Self) ▷ This card loses 1 Poison Token > Target Fides in the same Battle-area of this card(not this card) > Recover > You may(1W) > That Fides loses 1 Elemental Token > You Trophy(1)" },
+        { id: "YF038", name: "Izumo", subName: "Zen Master- Bōkensha- Monk", level: "5", Cost: "3Y", folder: "YellowFides", type: "Fides ", terrain: "G", trait: "Level-up/ Flexible/ Mageward(1)", power: "", description: "A: Choose 1 effect: 1. Target unholy Fides in Battle-area > Trash 2. Target Fides with (Poison Token) in its text > Return to the top of its owner deck" },
+        ];
+
+        // Loop through cardData and create card elements with image paths
+        cardData.forEach(card => {
+            const imagePath = `${basePath}${card.folder}/${card.id}.png`; // Construct image path
+            const cardHtml = `
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                <div class="card-container">
+                    <div class="card">
+                        <button class="card-button">
+                            <img src="${imagePath}" class="card-img-top" alt="${card.name}">
+                            <div class="card-text">
+                                <p>${card.description}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            // Append card HTML to card container
+            cardContainer.innerHTML += cardHtml;
+        });
+
+        // Add hover behavior to each card image
+        const cardContainers = document.querySelectorAll(".card-container");
+        const cardImages = document.querySelectorAll(".card-button");
+        cardContainers.forEach(container => {
+            const cardText = container.querySelector(".card-text");
+            //const cardText = image.nextElementSibling; // Get the card-text element (sibling of the image)
+
+            // Show card text on image hover
+            container.addEventListener("mouseenter", () => {
+                cardText.style.opacity = "1";
+                cardText.style.zIndex = "1";
+            });
+
+            // Hide card text when mouse leaves the image
+            container.addEventListener("mouseleave", () => {
+                cardText.style.opacity = "0";
+                cardText.style.zIndex = "0";
+            });
+
+            container.addEventListener("click", () => {
+            const cardIndex = Array.from(cardContainers).indexOf(container); // Get the index of the clicked card
+            const selectedCard = cardData[cardIndex]; // Get the corresponding card data
+            openModal(selectedCard); // Open modal with selected card data
+            });
+        });
+
+        ScrollReveal().reveal(cardContainers, { interval: 20, reset: true });
+    });
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>-RE- AETHERIUS</title>
+    </head>
+    <body style="background-color: #f7edcf;">
+
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
+    <a class="navbar-brand" href="https://recardgame.wordpress.com/"><img src="logo.png" alt="Logo" style="width: 30px; height: 30px;">  -RE- AETHERIUS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav"></ul>
+    </div>
+</nav>
+
+<!-- Banner Area -->
+<div class="container-fluid" style="padding-top: 59px;">
+    <div class="row">
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-blue" href="./BlueFides.html"><span class="hover-text">Blue</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-green" href="./GreenFides.html"><span class="hover-text">Green</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-purple" href="./PurpleFides.html"><span class="hover-text">Purple</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-red" href="./RedFides.html"><span class="hover-text">Red</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-white" href="./WhiteFides.html"><span class="hover-text">White</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-yellow" href="./YellowFides.html"><span class="hover-text">Yellow</span></a>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="container-fluid">
+    <!-- Sub-class buttons-->
+    <div class="d-flex justify-content-center align-items-center vh-20">
+        <h1 class="d-flex gap-2 button-container">
+            <a href="./YellowFides.html" class="hvr-underline-from-center selected">FIDES</a>
+            <a href="./YellowItems.html" class="hvr-underline-from-center">ITEMS</a>
+        </h1>
+    </div>
+    <div class="row" id="cardDisplay">
+        <!-- Card display area will be dynamically populated here -->
+        <!-- Example: -->
+        <!-- <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card Sub-Name</h6>
+                    <p class="card-text">Card Description</p>
+                    <!-- Add more card details here -->
+                <!-- </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<div id="myModal" class="modal" >
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="background-color: #f7edcf;">
+            <div class="row">
+                <div class="col-md-6">
+                    <img id="modalImg" src="" alt="Card Image" class="img-fluid">
+                </div>
+                <div class="col-md-6" id="modalDescriptionWindow">
+                  <!-- Detailed card description will be displayed here -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-description py-4 px-4" id="modalDescription">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

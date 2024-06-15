@@ -1,0 +1,247 @@
+<link rel="icon" type="image/x-icon" href="logo.png">
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+    // Call populateCards function when the page is fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+
+        //modal~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        const modal = document.getElementById("myModal");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        const modalImg = document.getElementById("modalImg");
+        const modalDescription = document.getElementById("modalDescription");
+        const cardContainer = document.getElementById("cardDisplay");
+        const basePath = 'cards/';
+
+        // Function to open modal with card details
+        function openModal(card) {
+            // Set image source and other card details
+            modalImg.src = `${basePath}${card.folder}/${card.id}.png`;
+            //modal content here
+            modalDescription.innerHTML = `
+            <table class="table custom-table">
+                <tbody>
+                    <tr>
+                        <th colspan="2" class="h2">${card.name}<br>${card.subName}</th>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Level</th>
+                        <td class="h4">${card.level}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Mana Cost</th>
+                        <td class="h4">${card.Cost}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Terrain Suitability</th>
+                        <td class="h4">${card.terrain}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Common Trait</th>
+                        <td class="h4">${card.trait}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Combat Power</th>
+                        <td class="h4">${card.power}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Ability</th>
+                        <td class="h4">${card.description}</td>
+                    </tr>
+                </tbody>
+            </table>
+            `;
+          // Display the modal
+          modal.style.display = "block";
+        }
+
+        // Close modal when close button is clicked
+        closeBtn.onclick = function() {
+          modal.style.display = "none";
+        };
+
+        // Close modal when user clicks outside the modal content
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+
+        //modal end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // Card data here
+        const cardData = [
+            { id: 'GI001', name: '', subName: 'Elf Talisman (Elf)', level: '2', Cost: '1G', folder: 'GreenItems', type: 'Item', terrain: '', trait: 'Flexible', power: '0-0-+2', description: "A: Equipped Fides loses all Elemental Token" },
+            { id: 'GI002', name: '', subName: 'Poison Bomb (Dryad)', level: '2', Cost: '2G', folder: 'GreenItems', type: 'Item', terrain: '', trait: 'Flexible', power: '0-0-0 ', description: "A: All Fides in the same Battle-area of this card lose their text until the end of turn > (Those Fides) gain 1 Poison Token > Receive 1 damage" },
+            { id: 'GI003', name: '', subName: 'Tough Spider Web (Web)', level: '2', Cost: '1G', folder: 'GreenItems', type: 'Item', terrain: '', trait: 'Flexible/ Reach', power: '0-0-0', description: "Any Defence Phase: (1G) ▷ Target Fides in the same Battle-area of this card > gains Slow until the end of turn > -1 Melee power until the end of turn" },
+            { id: 'GI004', name: '', subName: 'Wolf Claws (Hound/Wolf)', level: '2', Cost: '2G', folder: 'GreenItems', type: 'Item', terrain: '', trait: 'Flexible/ First strike', power: '+2-0-0', description: "A: Target enemy Item in the same Battle-area of this card > Return to the top of its owner deck " },
+            { id: 'GI005', name: 'Quercus', subName: 'Elfwood Bow (Archer)', level: '3', Cost: '2G', folder: 'GreenItems', type: 'Item', terrain: '+A', trait: '', power: '0-+2-0', description: "1. A: Target Fides> Receives 3 damage 2. Any Battle Phase: (1) > If this card in Battle-area > Target Fides ▷ Receives 2 damage " },
+            { id: 'GI006', name: 'Phantom', subName: 'Fenrir Hood (Fenrir) ', level: '4', Cost: '2G', folder: 'GreenItems', type: 'Item', terrain: '', trait: 'Flexible', power: '0-+1-+2', description: "1. A: Equipped Fides gains Phantom until the end of turn 2. P: Equipped Fides gains Mageward(1)" },
+            { id: 'GE001', name: '', subName: 'Moths to a Flame', level: '1', Cost: '1G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Enemy Battle Phase: Execute 2 Forest resident tokens with 1/1/1 & G-A, They gain the following text: [C: This card leaves play > Targer Fides > gains 1 +1 Power Token]" },
+            { id: 'GE002', name: '', subName: 'Eyes in the Forest', level: '2', Cost: '1G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Anytime: If you control 3+ Fides > Target summoning Event > Counter > You execute 2 Wolf Tokens" },
+            { id: 'GE003', name: '', subName: 'Lure', level: '2', Cost: '2G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Self Attack Phase: All enemy Fides must Block if able in this turn > You draw 1 card at the end of turn " },
+            { id: 'GE004', name: '', subName: 'Power of the Wild', level: '2', Cost: '1G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Any Battle Phase: Target Fides ▷ All power +2 until the end of turn > Gains overwhelming until the end of turn" },
+            { id: 'GE005', name: '', subName: 'Savage Blow', level: '2', Cost: '1G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Any Damage Phase: Target Fides in Battle-area ▷ Receives 4 damage " },
+            { id: 'GE006', name: '', subName: 'Shield of the Realm', level: '2', Cost: '2G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Anytime: Target card ▷ Recover > You receive 4 damage > If the game is in Stage II and Your Ace Aelora is in play " },
+            { id: 'GE007', name: '', subName: 'Tripping Roots', level: '2', Cost: '1G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Any Battle Phase: Target Fides in Battle-area ▷ If that Fides is the Final Fides > Move back to its Summon-area" },
+            { id: 'GE008', name: '', subName: 'Cleansing Rain', level: '3', Cost: '2G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Anytime: All your Fides with 1+ Elemental Token gain 1 +1 Power Token > Remove all Elemental Tokens > You heal 4" },
+            { id: 'GE009', name: '', subName: 'Corrosive Spray', level: '3', Cost: 'G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Anytime: Target non-Fides card ▷ Destroy" },
+            { id: 'GE010', name: '', subName: 'Elfwood Javelin Hurl', level: '3', Cost: '2G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Any Battle Phase: Target Leading Fides ▷ Receive 5 Piercing damage, 7 Piercing damage instead if the game is in Stage II and your Ace Aelora is in play" },
+            { id: 'GE011', name: '', subName: 'Stampede', level: '3', Cost: '2G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Self Return Phase: If you control 2+ non-Ace Fides > Target Fides > Receives 3 damage > You draw 2 cards" },
+            { id: 'GE012', name: '', subName: 'Unending Urges ', level: '3', Cost: '2G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "1. S: If the game is in Stage II and your Ace Galea is in play 2. Self Return Phase: Target your Fides in Battle-area> Move to its Summon-area > Gains 1 +1 Power Token > Target Player > Receives 1 damage per Positive Power Modifier on the Melee power of that Fides (Max.5)" },
+            { id: 'GE013', name: '', subName: 'Ceasefire Agreement', level: '4', Cost: '2G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Self Return Phase: You draw 2 cards > Target enemy player > Draws 1 card > That player Fides cannot Attack in his next turn > All player heal 4 > You heal 4" },
+            { id: 'GE014', name: '', subName: 'Vitality Siphon', level: '4', Cost: '2G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Any Attack Phase(pre-default action) : You may (x) ▷ All Fides receive (X+2) damage > You heal 1 per Fides damage by this effect" },
+            { id: 'GE015', name: '', subName: 'Possession by Fenrir', level: '6', Cost: '3G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Any Battle Phase: Target your Fides ▷ Destroy > Execute 1 Deity Token with G, 8/8/8, Overwhelming at the same poision (of the destroyed Fides), the Deity Token gains this text [C: this card deals battle damage to player > target non-Ace card > Destroy > Destroy this card > If the game is in Stage II and your Ace Ralph is in play > Target card > Destroy" },
+            { id: 'GE016', name: '', subName: 'Immovable', level: '2', Cost: '1G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Anytime: Target Fides ▷ Gains Static until the end of turn > All power +1 until the end of turn" },
+            // { id: 'GE017', name: '', subName: 'Explosive Dart Shot', level: '3', Cost: '2G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Any Battle Phase: Target Fides ▷ You choose 1 Set card of that Fides > Destroy > That Fides receives x damage (x= level of the Set-card) " },
+            { id: 'GE018', name: '', subName: 'Littling Escape', level: '3', Cost: '1G', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Anytime: Any Fides with 2- Health Recover > You draw 1 card" },
+            { id: 'GE019', name: '', subName: 'Natural Religion', level: '3', Cost: '2G ', folder: 'GreenItems', type: 'Event', terrain: '', trait: '', power: '', description: "Self Prepare Phase: Execute 1 Level 4- Fides with Mana-spot from your Graveyard for free > Tap that Fides" },
+            { id: 'GA001', name: 'Circle of Life', subName: '', level: '2', Cost: '2G', folder: 'GreenItems', type: 'Aura', terrain: '', trait: '', power: '', description: "1. C: When your Fides leaves play > You heal 1 2. C: When your Fides destroy > You may (3G) > That Fides return to its owner hand > Destroy this card" },
+            { id: 'GA002', name: 'Arcanewood Alliance', subName: '', level: '3', Cost: '2G', folder: 'GreenItems', type: 'Aura', terrain: '', trait: '', power: '', description: "C: When this card is Tap to pay the Mana-cost of summoning Green Fides > That Fides gains 1 +1 Power Token > You may (1) > If you have less number of card in your hand than one of the enemy player > You draw 1 card" },
+            { id: 'GA003', name: 'Biodiversity', subName: '', level: '3', Cost: '2G', folder: 'GreenItems', type: 'Aura', terrain: '', trait: '', power: '', description: "C: When your non-Ace Fides is summoned > If that Fides has no copies in play > That Fides gains 1 +1 Power Token > You heal 2" },
+            { id: 'GA004', name: 'Spirit of Elf', subName: '', level: '3', Cost: '2G', folder: 'GreenItems', type: 'Aura', terrain: '', trait: '', power: '', description: "1. A: You draw 1 card at the end of turn 2. P: All Elf Fides gain Mageward(1)" },
+            { id: 'GA005', name: 'Wolf Botherhood', subName: '', level: '3', Cost: '1G', folder: 'GreenItems', type: 'Aura', terrain: '', trait: '', power: '', description: "1. A: If you control Ralph > You summon 2 Wolf token 2. C: At your start turn > You summon 1 Wolf Token > You may (1G) > You summon 1 Wolf Token" },
+            { id: 'GA006', name: 'Scorching Panic', subName: '', level: '2', Cost: '2G', folder: 'GreenItems', type: 'Aura', terrain: '', trait: '', power: '', description: "1. A: You draw 1 card at the end of turn 2. P: Your Fides with Fire Token gain Overwhelming" },
+            { id: 'GA007', name: 'Mystic Wildness', subName: '', level: '3', Cost: '2G', folder: 'GreenItems', type: 'Aura', terrain: '', trait: '', power: '', description: "C: When your Event enters play > You may (Self)(1B) > Target Fides > You choose 1 effect: 1. Gains Static until the end of turn 2. Gain Shield(2) until the end of turn 3. All power +2 until the end of turn" },
+            { id: 'GA008', name: 'Natural Toxin', subName: '', level: '3', Cost: '2G', folder: 'GreenItems', type: 'Aura', terrain: '', trait: '', power: '', description: "Self Prepare Phase: (Self) ▷ Target your Dryad Fides or Planta Fides > Tap > Target Fides > Gains 1 Poison Token > player who control that Fides receives 1 damage per Poison Token on that Fides" },
+            { id: 'GA009', name: "Nature's Resolve", subName: '', level: '3', Cost: '2G', folder: 'GreenItems', type: 'Aura', terrain: '', trait: '', power: '', description: "Self Turn: (Self) ▷ Put 1-2 card from your Graveyard under your Deck at any order> Target Fides > Loses 1 Elemental Token or heal 2" },
+        ];
+
+        // Loop through cardData and create card elements with image paths
+        cardData.forEach(card => {
+            const imagePath = `${basePath}${card.folder}/${card.id}.png`; // Construct image path
+            const cardHtml = `
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                <div class="card-container">
+                    <div class="card">
+                        <button class="card-button">
+                            <img src="${imagePath}" class="card-img-top" alt="${card.name}">
+                            <div class="card-text">
+                                <p>${card.description}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            // Append card HTML to card container
+            cardContainer.innerHTML += cardHtml;
+        });
+
+        // Add hover behavior to each card image
+        const cardContainers = document.querySelectorAll('.card-container');
+        const cardImages = document.querySelectorAll('.card-button');
+        cardContainers.forEach(container => {
+            const cardText = container.querySelector('.card-text');
+            //const cardText = image.nextElementSibling; // Get the card-text element (sibling of the image)
+
+            // Show card text on image hover
+            container.addEventListener('mouseenter', () => {
+                cardText.style.opacity = '1';
+                cardText.style.zIndex = '1';
+            });
+
+            // Hide card text when mouse leaves the image
+            container.addEventListener('mouseleave', () => {
+                cardText.style.opacity = '0';
+                cardText.style.zIndex = '0';
+            });
+
+            container.addEventListener('click', () => {
+            const cardIndex = Array.from(cardContainers).indexOf(container); // Get the index of the clicked card
+            const selectedCard = cardData[cardIndex]; // Get the corresponding card data
+            openModal(selectedCard); // Open modal with selected card data
+            });
+        });
+
+        ScrollReveal().reveal(cardContainers, { interval: 20, reset: true });
+    });
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>-RE- AETHERIUS</title>
+    </head>
+    <body style="background-color: #f7edcf;">
+
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
+    <a class="navbar-brand" href="https://recardgame.wordpress.com/"><img src="logo.png" alt="Logo" style="width: 30px; height: 30px;">  -RE- AETHERIUS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav"></ul>
+    </div>
+</nav>
+
+<!-- Banner Area -->
+<div class="container-fluid" style="padding-top: 59px;">
+    <div class="row">
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-blue" href="./BlueItems.html"><span class="hover-text">Blue</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-green" href="./GreenItems.html"><span class="hover-text">Green</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-purple" href="./PurpleItems.html"><span class="hover-text">Purple</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-red" href="./RedItems.html"><span class="hover-text">Red</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-white" href="./WhiteItems.html"><span class="hover-text">White</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-yellow" href="./YellowItems.html"><span class="hover-text">Yellow</span></a>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="container-fluid">
+    <!-- Sub-class buttons-->
+    <div class="d-flex justify-content-center align-items-center vh-20">
+        <h1 class="d-flex gap-2 button-container">
+            <a href="./GreenFides.html" class="hvr-underline-from-center">FIDES</a>
+            <a href="./GreenItems.html" class="hvr-underline-from-center selected">ITEMS</a>
+        </h1>
+    </div>
+    <div class="row" id="cardDisplay">
+        <!-- Card display area will be dynamically populated here -->
+        <!-- Example: -->
+        <!-- <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card Sub-Name</h6>
+                    <p class="card-text">Card Description</p>
+                    <!-- Add more card details here -->
+                <!-- </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<div id="myModal" class="modal" >
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="background-color: #f7edcf;">
+            <div class="row">
+                <div class="col-md-6">
+                    <img id="modalImg" src="" alt="Card Image" class="img-fluid">
+                </div>
+                <div class="col-md-6" id="modalDescriptionWindow">
+                  <!-- Detailed card description will be displayed here -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-description py-4 px-4" id="modalDescription">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

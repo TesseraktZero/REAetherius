@@ -1,0 +1,246 @@
+<link rel="icon" type="image/x-icon" href="logo.png">
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+    // Call populateCards function when the page is fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+
+        //modal~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        const modal = document.getElementById("myModal");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        const modalImg = document.getElementById("modalImg");
+        const modalDescription = document.getElementById("modalDescription");
+        const cardContainer = document.getElementById("cardDisplay");
+        const basePath = "cards/";
+
+        // Function to open modal with card details
+        function openModal(card) {
+            // Set image source and other card details
+            modalImg.src = `${basePath}${card.folder}/${card.id}.png`;
+            //modal content here
+            modalDescription.innerHTML = `
+            <table class="table custom-table">
+                <tbody>
+                    <tr>
+                        <th colspan="2" class="h2">${card.name}<br>${card.subName}</th>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Level</th>
+                        <td class="h4">${card.level}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Mana Cost</th>
+                        <td class="h4">${card.Cost}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Terrain Suitability</th>
+                        <td class="h4">${card.terrain}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Common Trait</th>
+                        <td class="h4">${card.trait}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Combat Power</th>
+                        <td class="h4">${card.power}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Ability</th>
+                        <td class="h4">${card.description}</td>
+                    </tr>
+                </tbody>
+            </table>
+            `;
+          // Display the modal
+          modal.style.display = "block";
+        }
+
+        // Close modal when close button is clicked
+        closeBtn.onclick = function() {
+          modal.style.display = "none";
+        };
+
+        // Close modal when user clicks outside the modal content
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+
+        //modal end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // Card data here
+        const cardData = [
+        { id: "WF001", name: "Homunculus", subName: "Construction", level: "1", Cost: "1W", folder: "WhiteFides", type: "Fides", terrain: "", trait: "Power-spot", power: "0-0-3", description: "1. A: You execute 1 Mortiflesh Token 2. C: When you end turn > You may Tap 1 your non-Ace Fides > You execute 1 Mortiflesh Token " },
+        { id: "WF002", name: "Little Spook", subName: "Unholy Weird Spirima", level: "1", Cost: "1W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Swift", power: "2-1-1", description: "1. A: You draw 1 card at the end of turn 2. C: When this card destroyed > Recover > Removes all Token on this card > This card gains 1 Poison Token > Target Enemy player > Move this card to that Enemy player Summon-area" },
+        { id: "WF003", name: "", subName: "V.S. Familiar Soldier", level: "1", Cost: "1W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "Resurrection/Blitz", power: "2-0-1", description: "1. P: This card is treated as 2 Fides when paying Ouroborous 2. C: When this card trash > You draw 1 card" },
+        { id: "WF004", name: "", subName: "Wild-Rats", level: "1", Cost: "1W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Flexible", power: "1-1-1", description: "1. A: You draw 1 card at the end of turn 2. Any Battle Phase: (0) > Target 2 Fides in the same Battle-area of this card ▷ Gain 1 Poison Token" },
+        { id: "WF005", name: "", subName: "Alchemist Apprentice", level: "2", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "", power: "2-1-2", description: "1. A: You discard 1 card from the top of your deck > You execute 1 Mortiflesh Token 2. C: When your Alchemist Fides enter play > You may (1) > You execute 1 Mortiflesh" },
+        { id: "WF006", name: "Barbara", subName: "Tribe Prophet", level: "2", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "Flexible", power: "0-2-3", description: "1. Any Battle Phase: (1W) > Target Fides ▷ Move to a new area at any position of its side > Destroy this card at the end of turn 2. Anytime:(0) ▷ You Scry(1)" },
+        { id: "WF007", name: "The Victory Vault", subName: "Tribe Construction", level: "2", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "", trait: "Power-spot/Supply(1)", power: "0-0-4", description: "1. Any Battle Phase: (1W) ▷ You discard 1 card from your Trophy area > All player discard 3 cards from the top of deck > You put up to 3 card from your graveyard under your deck at any order 2. C: When your Fides deals Battle damage to player > You may (Self) > You Trophy(1)" },
+        { id: "WF008", name: "", subName: "Tribe Slinger", level: "2", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Resurrection/Flexible/Overwhelming", power: "1-2-2", description: "1. A: Target player > Discard 1 card from the top of his deck 2. Any Damage Phase: (1) > Target Fides in the same Battle-area of this card ▷ Gain 1 -1 Power Token > Target player . Discard 1 card from the top of his deck > Destroy this card at the end of turn" },
+        { id: "WF009", name: "", subName: "Undertaker Nethra Resident", level: "2", Cost: "1W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "", power: "1-1-3", description: "C: When your Fides leaves play first time in a turn > You may (Self) > Put 1- 3 card from your graveyard under your deck at any order > You heal 3" },
+        { id: "WF010", name: "", subName: "Unholy- Bones Bones Thrower", level: "2", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Resurrection/Shield(1)", power: "0-2-2", description: "1. Self Turn: (2)  You discard 1 card from the top of your deck > You execute 1 Mortiflesh Token 2. Any Damage Phase: (1) > Target Fides in the same Battle-area of this card > Receives 3 damage > This card gains 1 -1 Power Token" },
+        { id: "WF011", name: "", subName: "Unholy Vicious Wraith", level: "2", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Flexible/Deathtouch/Mageward(1)", power: "6-0-4", description: "C: When end turn > If you control 5- Mana > Destroy this card" },
+        { id: "WF012", name: "Hubert", subName: "Dwarf Trap master", level: "3", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "Overwhelming/Blitz", power: "3-0-3", description: "1. C: When your Trap Trigger first time in a turn > This card gains 1 +1 Power Token 2. C: When this card Deploy to Battle-area with your Trap > This card +2 Melee power +2 Health until the end of turn" },
+        { id: "WF013", name: "Luke", subName: "Apothecary", level: "3", Cost: "1W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "", power: "1-1-3", description: "1. Self Prepare Phase: (1) > Target Fides > Gains 1 Poison Token > You heal 2 2. C: When enemy Fides with Poison Token leaves play > You may (Self)(1) > You draw 1 card" },
+        { id: "WF014", name: "Rosa", subName: "Alchemist", level: "3", Cost: "1W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Resurrection/Blitz", power: "3-0-3", description: "1. A: Target Fides > Gains 1 any Elemental Token 2. Any Damage Phase: (1W)(Ouro2) ▷ Target Fides in Battle-area > Gains 1 any Elemental Token > -1 Melee power until the end of turn" },
+        { id: "WF015", name: "", subName: "Tribe Axeman", level: "3", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "Resurrection/Blitz/Overwhelming", power: "4-1-4", description: "1. A: Target Level 3- non-Fides card > Destroy 2. Any Damage Phase: (1) ▷ If this card in Battle-area > (Target Fides > Receives 3 damage) or ( Target player > Discard 2 cards from the top of his deck) > Destroy this card at the end of turn" },
+        { id: "WF016", name: "", subName: "Unholy- Bones Swordsman", level: "3", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "Resurrection/Blitz/Shield(1)", power: "4-0-2", description: "1. Self Turn: (2)  You discard 1 card from the top of your deck > You execute 1 Mortiflesh Token 2. C: When this card leaves play > Target Fides in the same area of this card > Gains 1 -1 Power Token" },
+        { id: "WF017", name: "", subName: "Venom Alchemist", level: "3", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "Resurrection/Flexible", power: "0-2-3", description: "1. Any Battle Phase: (1)(Ouro1) ▷ Target Fides with Poison Token in Battle-area > Receives 3 damage 2. C: When Enemy Fides with Poison Token leaves play > You may (1) > You execute 2 Mortiflesh Token" },
+        { id: "WF018", name: "Winkle", subName: "Trap Master", level: "3", Cost: "1W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "", power: "3-2-3", description: "1. C: When your Trap Trigger first time in a turn > You draw 1 card 2. C: When your Trap enter play > You may Set a value on the Trap card one more time, the Trap Trigger when Either condition is met  " },
+        { id: "WF019", name: "Ampelos", subName: "Vine Dryad", level: "4", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Flexible/Reach", power: "4-2-4", description: "Any Defence Phase: (1W) > Target 2 Enemy Fides in Battle-area ▷ Gain 1 Poison Token > Exchange their position " },
+        { id: "WF020", name: "Linx", subName: "Blade Alchemist", level: "4", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Resurrection/Blitz", power: "4-0-3", description: "1. A: Target non-Fides card > Trash > This card gains 1 +1 Power Token 2. Any Battle Phase: (1)(Ouro2) ▷ If this card in Battle-area > This card gains 1 +1 Power Token > Gains First strike until the end of turn" },
+        { id: "WF021", name: "Marsh", subName: "Flame Alchemist", level: "4", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Resurrection/Flexible", power: "4-2-4", description: "A: You may (Ouro2) > Target Fides in Battle-area > Receives 2 damage > Gains 1 Fire Token > You may (Ouro1) > That Fides receives 2 damage > You may (Ouro 1) > That Fides receives 2 damage > You may (Ouro1) > That Fides receives 2 damage" },
+        { id: "WF022", name: "", subName: "Unholy Bones Summoner Sorcerer", level: "4", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "", power: "1-2-3", description: "1. C: When your Bones Fides enter play > You may (1) > Execute 1 Level 4- Bones Fides from your Graveyard for free > This card lose this text until the end of turn 2. When this card leaves play > Trash this card " },
+        { id: "WF023", name: "", subName: "Unholy-Bones Minotarus ", level: "4", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "Resurrection/Shield(1)", power: "4-1-4", description: "1. A: Trash 1 Trap in your Graveyard > You draw 1 card > This card gain 1 +1 Power Token 2. Self Damage Phase: (1W) ▷ If this card in Battle-area > Target Set-card > Destroy > You Execute 1 Mortiflesh Token" },
+        { id: "WF024", name: "Attila", subName: "Tribe Chieftain", level: "5", Cost: "3W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "Resurrection/Blitz/Overwhelming/First strike", power: "6-0-5", description: "Self Damage Phase: (2) > If this card in Battle-area > Target Enemy Fides > Destroy > Destroy this card > Target Enemy Fides > Randomly Discard 1 card from his hand > You Trophy(1)" },
+        { id: "WF025", name: "Cassandra", subName: "Healing Alchemist", level: "5", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G", trait: "Resurrection/Flexible", power: "4-3-4", description: "1. A: You may (Ouro2) > Target Fides > Recover > You heal 2 2. Self Damage Phase: (2W)(Ouro2) ▷ You heal 6 3. When you heal, heal 2 more" },
+        { id: "WF026", name: "Kerberos", subName: "Unholy Guards of Nethra", level: "5", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Static/Blitz/Overwhelming", power: "7-2-7", description: "C: When this card destroy > This card gains 1 Death Token > Lose all Elemental Token and Lose all -1 Power Token > Recover > If 3+ Death Token on this card > You lose " },
+        { id: "WF027", name: "Lisa", subName: "Tribe Heroine Archer", level: "5", Cost: "3W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Resurrection/Blitz/First strike", power: "3-4-5", description: "1. A: Target Fides > Randomly discard 1 card from hand > That player discard x card from the top of this deck (x= level of that randomly discarded card)(Max.4) 2. C: When this card Attack > You may (1) > Target Fides > (Receives 3 damage) or (gains 1 Frost Token and 1+1 Power Token) or (gains Overwhelming until the end of turn)  " },
+        { id: "WF028", name: "Hades", subName: "Unholy Deity of Nethra ", level: "6", Cost: "3W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Resurrection/Blitz/Deathtouch", power: "5-2-5", description: "1. A: All non-Ace Fides (not this card) > Destroy > You cannot summon card in this turn 2. C: When you start turn > You execute 1 Mortiflesh Token" },
+        { id: "WF029", name: "Key", subName: "V.S. Arch Alchemist", level: "6", Cost: "2W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Resurrection/Flexible", power: "5-3-5", description: "1. A: You may (Ouro3) > Distribute 3 -1 Power Token to any Fides 2. Any Battle Phase: (2W)(Ouro3) > Target Fides in Battle-area with 2+ Tokens ▷ Destroy" },
+        { id: "WF030", name: "Sumeragi", subName: "Exiled Samurai of Mystery Land", level: "7", Cost: "3W", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Mageward(2)/Blitz", power: "9-3-9", description: "1. Any Battle Phase: (1W) ▷ Recover this card > Gains 3 -1 Power Tokens 2. C: When Enemy Fides in the same Battle-area of this card destroyed > This card gains 1 Poison Token > You may (2) > This card loses 2 Poison Tokens > Target Fides or player > Receives 4 damage > You heal 4" },
+        { id: "WF031", name: "Neco", subName: "Ultimate Corpse Dragon", level: "8", Cost: "5W", folder: "WhiteFides", type: "Fides", terrain: "BEHEMOTH", trait: "Reach", power: "+6-0-14", description: "1.S: When Summoning this card, You may Ouroboros(4) > This card Level -2 Mana-cost -2 2. A: All Enemy Fides gain 1 Poison Token > You heal 4 3. P: Fides with Poison Token -1 Melee power -1 Ranged power and lose all Shield" },
+        { id: "WF032", name: "", subName: "Fledgling Corpse Dragon", level: "4", Cost: "3W", folder: "WhiteFides", type: "Fides", terrain: "A", trait: "Resurrection/ Swift", power: "4-0-4", description: "1. S: When non-White Dragon Fides leaves play > You may (1W) > Execute this card from your hand or Graveyard for free 2. C: When this card leaves play > Target Fides or player > Receives 3 damage" },
+        { id: "WF033", name: "Gabriel ", subName: "Holy Unholy Bones Priest", level: "5", Cost: "3W/P", folder: "WhiteFides", type: "Fides", terrain: "G-A", trait: "Resurrection/ Shield(1)/ Blitz/ Power-spot", power: "", description: "P: All your Priest Fides, Holy Fides gain this text: [Any Battle Phase: (1W ▷ Target Bones Fides in play or in any Graveyard > trash > This card Recovers > gains 1 +1 Power Token > You heal 4" },
+        ];
+
+        // Loop through cardData and create card elements with image paths
+        cardData.forEach(card => {
+            const imagePath = `${basePath}${card.folder}/${card.id}.png`; // Construct image path
+            const cardHtml = `
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                <div class="card-container">
+                    <div class="card">
+                        <button class="card-button">
+                            <img src="${imagePath}" class="card-img-top" alt="${card.name}">
+                            <div class="card-text">
+                                <p>${card.description}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            // Append card HTML to card container
+            cardContainer.innerHTML += cardHtml;
+        });
+
+        // Add hover behavior to each card image
+        const cardContainers = document.querySelectorAll(".card-container");
+        const cardImages = document.querySelectorAll(".card-button");
+        cardContainers.forEach(container => {
+            const cardText = container.querySelector(".card-text");
+            //const cardText = image.nextElementSibling; // Get the card-text element (sibling of the image)
+
+            // Show card text on image hover
+            container.addEventListener("mouseenter", () => {
+                cardText.style.opacity = "1";
+                cardText.style.zIndex = "1";
+            });
+
+            // Hide card text when mouse leaves the image
+            container.addEventListener("mouseleave", () => {
+                cardText.style.opacity = "0";
+                cardText.style.zIndex = "0";
+            });
+
+            container.addEventListener("click", () => {
+            const cardIndex = Array.from(cardContainers).indexOf(container); // Get the index of the clicked card
+            const selectedCard = cardData[cardIndex]; // Get the corresponding card data
+            openModal(selectedCard); // Open modal with selected card data
+            });
+        });
+
+        ScrollReveal().reveal(cardContainers, { interval: 20, reset: true });
+    });
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>-RE- AETHERIUS</title>
+    </head>
+    <body style="background-color: #f7edcf;">
+
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
+    <a class="navbar-brand" href="https://recardgame.wordpress.com/"><img src="logo.png" alt="Logo" style="width: 30px; height: 30px;">  -RE- AETHERIUS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav"></ul>
+    </div>
+</nav>
+
+<!-- Banner Area -->
+<div class="container-fluid" style="padding-top: 59px;">
+    <div class="row">
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-blue" href="./BlueFides.html"><span class="hover-text">Blue</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-green" href="./GreenFides.html"><span class="hover-text">Green</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-purple" href="./PurpleFides.html"><span class="hover-text">Purple</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-red" href="./RedFides.html"><span class="hover-text">Red</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-white" href="./WhiteFides.html"><span class="hover-text">White</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-yellow" href="./YellowFides.html"><span class="hover-text">Yellow</span></a>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="container-fluid">
+    <!-- Sub-class buttons-->
+    <div class="d-flex justify-content-center align-items-center vh-20">
+        <h1 class="d-flex gap-2 button-container">
+            <a href="./WhiteFides.html" class="hvr-underline-from-center selected">FIDES</a>
+            <a href="./WhiteItems.html" class="hvr-underline-from-center">ITEMS</a>
+        </h1>
+    </div>
+    <div class="row" id="cardDisplay">
+        <!-- Card display area will be dynamically populated here -->
+        <!-- Example: -->
+        <!-- <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card Sub-Name</h6>
+                    <p class="card-text">Card Description</p>
+                    <!-- Add more card details here -->
+                <!-- </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<div id="myModal" class="modal" >
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="background-color: #f7edcf;">
+            <div class="row">
+                <div class="col-md-6">
+                    <img id="modalImg" src="" alt="Card Image" class="img-fluid">
+                </div>
+                <div class="col-md-6" id="modalDescriptionWindow">
+                  <!-- Detailed card description will be displayed here -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-description py-4 px-4" id="modalDescription">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

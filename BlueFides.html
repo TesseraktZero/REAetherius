@@ -1,0 +1,249 @@
+<link rel="icon" type="image/x-icon" href="logo.png">
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+    // Call populateCards function when the page is fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+
+        //modal~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        const modal = document.getElementById("myModal");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        const modalImg = document.getElementById("modalImg");
+        const modalDescription = document.getElementById("modalDescription");
+        const cardContainer = document.getElementById("cardDisplay");
+        const basePath = 'cards/';
+
+        // Function to open modal with card details
+        function openModal(card) {
+            // Set image source and other card details
+            modalImg.src = `${basePath}${card.folder}/${card.id}.png`;
+            //modal content here
+            modalDescription.innerHTML = `
+            <table class="table custom-table">
+                <tbody>
+                    <tr>
+                        <th colspan="2" class="h2">${card.name}<br>${card.subName}</th>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Level</th>
+                        <td class="h4">${card.level}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Mana Cost</th>
+                        <td class="h4">${card.Cost}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Terrain Suitability</th>
+                        <td class="h4">${card.terrain}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Common Trait</th>
+                        <td class="h4">${card.trait}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Combat Power</th>
+                        <td class="h4">${card.power}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Ability</th>
+                        <td class="h4">${card.description}</td>
+                    </tr>
+                </tbody>
+            </table>
+            `;
+          // Display the modal
+          modal.style.display = "block";
+        }
+
+        // Close modal when close button is clicked
+        closeBtn.onclick = function() {
+          modal.style.display = "none";
+        };
+
+        // Close modal when user clicks outside the modal content
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+
+        //modal end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        // Card data here
+        const cardData = [
+            { id: 'BF001', name: 'Biscuit', subName: 'Gerbil Sorcerer', level: '1', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: 'G', trait: 'Flexible', power: '0-2-1', description: "A: You receive 2 damage > You draw 2 cards, resolving this ability is treated as an Event enter play" },
+            { id: 'BF002', name: 'Owl Darren', subName: "Dean Seraphina's Pet", level: '1', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: 'A', trait: 'Swift', power: '2-0-1', description: "1. A: You draw 2 cards > You discard 1 card from hand 2. P: Your Seraphina Fides gain Blitz"  },
+            { id: 'BF003', name: 'Room of Crystal', subName: 'Construction', level: '1', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: '', trait: 'Supply(1)/ Power-spot', power: '0-0-4', description: "C: When your Event enter the play > You may (1B)(Self) > You draw 1 card > You heal 3"  },
+            { id: 'BF004', name: '', subName: 'The Duchy Soldier- Common Soldier', level: '1', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: 'G', trait: '', power: '1-0-1', description: "1. A: You draw 1 card at the end of turn 2. A: You receive 2 damage > You execute 2 Soldier Token"  },
+            { id: 'BF005', name: '', subName: 'The Duchy Soldier- Vanguards', level: '1', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Blitz', power: '4-0-3', description: "C: When this card destroys and leaves the play > You receive 4 damage"  },
+            { id: 'BF006', name: '', subName: 'Arcane-drived Working Robort', level: '2', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: 'G', trait: 'Power-spot', power: '2-0-2', description: "P: The first Event you summon in each turn > -1 Level "  },
+            { id: 'BF007', name: 'Arcane Spy', subName: '', level: '2', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Blitz', power: '3-1-3', description: "1. S: This card enter enemy's Summon-area when enter the play 2. A: You randomly discard 1 card from hand > Target player > Discard 1 card from hand 3. C: When enemy's Event enter the play > You receive 2 damage > This card move to that player's Summon-area"  },
+            { id: 'BF008', name: '', subName: 'Elemental Sorcerer Apprentice', level: '2', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Shield(1)', power: '2-1-2', description: "A: Target Fides > Gains 1 any Elemental Token > If you control a Level 3+ Sorcerer Fides > You draw 1 card"  },
+            { id: 'BF009', name: '', subName: 'Front Gate Statues', level: '2', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Wall', power: '3-0-3', description: "C: When your Event enter play > This card gains 1 +1 Power Token"  },
+            { id: 'BF010', name: 'Lyn', subName: 'Elemental Sorcerer Apprentice', level: '2', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Flexible', power: '2-1-2', description: "Any Battle Phase: (1B) > Targer 1 to 2 Fides ▷ If this card in Battle-area > Those Fides receive 1 damage > gain 1 Zap Token"  },
+            { id: 'BF011', name: '', subName: 'The Duchy Soldier- Heavy Knight', level: '2', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G', trait: 'Blitz/ Mageward(1)/ First strike', power: '3-0-3', description: "Any Battle Phase: (2) > Targer enemy Fides in the same Battle-area of this card ▷ Return to its owner hand > Destroy this card"  },
+            { id: 'BF012', name: 'Alexander', subName: 'The Duchy General', level: '3', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: 'G', trait: '', power: '3-0-4', description: "1. P: Elemental Token on your Soldier and General Fides have no Basic-effect 2. C: When your Event enter play > You execute 1 Soldier Token > Target Fides > Loses 1 any Elemental Token"  },
+            { id: 'BF013', name: 'Allea', subName: 'Wind Sorcerer', level: '3', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Flexible/ Shield(1)/ Swift', power: '0-2-3', description: "A: Target Fides in Battle-area > Move back to its Summon-area > Tap > You heal 2"  },
+            { id: 'BF014', name: 'Azure', subName: 'Illusion Sorcere', level: '3', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Flexible/ Shield(1)', power: '0-2-3', description: "1. A: Execute 1 Dragon Token with 7/0/7, G-A 2. P: Your Dragon Token Cannot deals Battle-damage 3. C: When this card leaves play > Trash all your Dragon Token"  },
+            { id: 'BF015', name: 'Daze', subName: '-The Duchy Soldier Elemental Sorcerer', level: '3', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Shield(1)', power: '3-1-3', description: "Any Battle Phase: (1) > Targer Fides ▷ Loses all Common-trait until the end of turn > Gains 1 Zap token"  },
+            { id: 'BF016', name: '', subName: 'Guards of Sorcerer Academia ', level: '3', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G', trait: 'Wall', power: '4-0-4', description: "1. Any Battle Phase: (1) > Targer Fides in the same area of this card ▷ All damage to be dealt to that Fides will be transferred to this card 2. C: When this card destroys and leaves play > You draw 1 card"  },
+            { id: 'BF017', name: '', subName: 'Hawk Summoner Familiar Sorcerer', level: '3', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: '', power: '1-2-3', description: "Self Prepare Phase: (1B) ▷ Execute 1 Hawk Token with G-A, 1/1/1, and Swift in play"  },
+            { id: 'BF018', name: 'Opal', subName: 'Sorcerer- Wizened Seer', level: '3', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G', trait: '', power: '0-2-3', description: "1. A: You draw 1 card at the end of turn 2. C: When your Event enter play > You Scry 1 > You may (Self) > You draw 1 card "  },
+            { id: 'BF019', name: 'Silk', subName: 'Elemental Sorcerer', level: '3', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: '', power: '1-2-3', description: "1. P: All Level 4+ card in your hand with Fire or Elemental token in their text -1 Level & -1 Mana-cost 2. C: When your Event enter play > Target Fides > Gains 1 Fire Token"  },
+            { id: 'BF020', name: '', subName: 'Spell Mirror', level: '3', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Flexible', power: '0-0-8', description: "1. C: When this card receives battle damage > Target enemy player > Receive the same amount of damage 2. C: when you end turn > Trash this card"  },
+            { id: 'BF021', name: '', subName: 'The Duchy Soldier- Enchanted Archer', level: '3', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: '', power: '1-2-3', description: "C: When your Event enter play > You Execute 1 Soldier Token > You may (1) > Targer player > Receive 2 damages "  },
+            { id: 'BF022', name: '', subName: 'The Duchy Soldier- Aeriknight', level: '4', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G', trait: 'Blitz', power: '4-0-4', description: "Self Attack Phase (1) ▷ If this card in Battle area > Target Your Mount Fides > +2 Ranged power until the end of turn > Target Fides in Summon-area > Receives 4 damages"  },
+            { id: 'BF023', name: 'Serene', subName: 'Enchantment Sorcerer', level: '4', Cost: '1B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Flexible/ Mageward(1)', power: '0-2-4', description: "1. A: Target card > Deactivate 1 Activating Active Ability > You draw 1 card 2. P: All enemy card in the same Battle-area of this card > Cannot Activate Active Ability "  },
+            { id: 'BF024', name: 'Sparks', subName: 'Elemental Sorcerer', level: '4', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Flexible', power: '4-0-4', description: "1. A: Target 2 Fides > Gain 1 Zap Token 2. C: When Fides with Zap Token receive any damage > If that Fides is not in Destroyed Condition > You may (1B) > That FIdes return to its owner hand"  },
+            { id: 'BF025', name: 'Mimicor', subName: 'Professor of the Sorcerer Academia', level: '5', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Flexible/ Shield(1)', power: '2-3-4', description: "A: Execute 1 Level 4- Event from any Graveyard for free > Trash that Event (The Event must be summon-able in this phase)"  },
+            { id: 'BF026', name: '', subName: 'Mount- Hippogriff', level: '5', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'A', trait: 'Blitz/ Swift', power: '4-2-4', description: "1. A: Target non-Fides card > Return to the top of its owner deck 2. Any Battle Phase: (1) ▷ Target 4- Melee power Fides in Summon-area > Gains Swift, A until the end of turn > Lose G until the end of turn"  },
+            { id: 'BF027', name: '', subName: 'The Duchy Soldier- Enchanted Swordsman', level: '5', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Blitz', power: '5-0-4', description: "1. A: Target Item or Trap > Return to the top of its owner deck 2. C: When your Event enter play > You may (1B) > This card gains First strike until the end of turn > This card gains +2 Melee power until the end of turn"  },
+            { id: 'BF028', name: 'Wayne', subName: 'The Forbidden Pursuer', level: '5', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Flexible', power: '5-0-5', description: "1. A: Target Event in Your graveyard > Trash > Target Fides in Battle-area > Return to the top of its owner deck 2. Any Damage Phase (2) ▷ Trash 1 card in enemy graveyard > Target Fides > Gain 1 -1 Power Token"  },
+            { id: 'BF029', name: 'Gray', subName: 'Enchantment Sorcerer', level: '6', Cost: '3B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Flexible/ Mageward(2)', power: '5-0-5', description: "P: All Enemy Fides in the same Battle-area of this card lose all text "  },
+            { id: 'BF030', name: 'Ifrit', subName: 'Fire Spirit', level: '6', Cost: '3B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: '', power: '5-3-5', description: "1. C: When FIdes gains 1 Fire Token> That Fides receives 2 damage 2. C: When Fides with 1+ Fire Token Destroys and leaves play > Player who control that Fides > Receives 2 damage 3. C: When enemy Event enter play > This card gains 1 Fire Token > You may (1) > Target Fides > Gains 1 Fire Token"  },
+            { id: 'BF031', name: 'Seraphina Doomcaster', subName: 'Dean of the Sorcerer Academia', level: '6', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Shield(1)/ Mageward(1)', power: '3-5-6', description: "1. P: All your Fides gain Shield(1) 2. C: When your Event enter play > You may (1) > choose 1 effect: 1. Target Fides > Receives 3 damages 2. Target player > Receives 2 damage"  },
+            { id: 'BF032', name: 'Voltclaw', subName: 'The Thunderbeast', level: '6', Cost: '3B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Blitz/ Flexible/ Overwhelming', power: '7-2-7', description: "1. Any Battle Phase: (1B) ▷ All (not this card) Fides in the same Battle-area of this card > gain 1 Zap Token 2. C: When the card deals battle damage > Target Fides > Gains 1 Zap Token > All Fides receive 3 damage per Zap Token on them 3. C: When you start of turn > You receive 4 damage"  },
+            { id: 'BF033', name: '', subName: 'Mysterious Acient Golem', level: '7', Cost: '3B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Slow/ Overwhelming', power: '9-3-9', description: "1. A: All Level 5- Fides return to its owner hand 2. A: All Enemy player randomly discard 1 card from hand "  },
+            { id: 'BF034', name: '', subName: 'Mount- Mountain Troll', level: '3', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G', trait: 'Flexible', power: '4-0-4', description: "A: All Enemy Fides with 2- Melee power move back to their Summon-area"  },
+            { id: 'BF035', name: 'Quik', subName: 'Arcane Trap Master', level: '3', Cost: '2B', folder: 'BlueFides', type: 'Fides', terrain: 'G-A', trait: 'Flexible', power: '3-0-3', description: "1. A: Move to a Battle-area at any position of your side > All Enemy Trap in the same Battle-area of this card > Trash(without Activate) 2. P: All Enemy cards active ability cannot be activated if in the same Battle-area of this card"  },
+        ];
+
+        // Loop through cardData and create card elements with image paths
+        cardData.forEach(card => {
+            const imagePath = `${basePath}${card.folder}/${card.id}.png`; // Construct image path
+            const cardHtml = `
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                <div class="card-container">
+                    <div class="card">
+                        <button class="card-button">
+                            <img src="${imagePath}" class="card-img-top" alt="${card.name}">
+                            <div class="card-text">
+                                <p>${card.description}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            // Append card HTML to card container
+            cardContainer.innerHTML += cardHtml;
+        });
+
+        // Add hover behavior to each card image
+        const cardContainers = document.querySelectorAll('.card-container');
+        const cardImages = document.querySelectorAll('.card-button');
+        cardContainers.forEach(container => {
+            const cardText = container.querySelector('.card-text');
+            //const cardText = image.nextElementSibling; // Get the card-text element (sibling of the image)
+
+            // Show card text on image hover
+            container.addEventListener('mouseenter', () => {
+                cardText.style.opacity = '1';
+                cardText.style.zIndex = '1';
+            });
+
+            // Hide card text when mouse leaves the image
+            container.addEventListener('mouseleave', () => {
+                cardText.style.opacity = '0';
+                cardText.style.zIndex = '0';
+            });
+
+            container.addEventListener('click', () => {
+            const cardIndex = Array.from(cardContainers).indexOf(container); // Get the index of the clicked card
+            const selectedCard = cardData[cardIndex]; // Get the corresponding card data
+            openModal(selectedCard); // Open modal with selected card data
+            });
+        });
+
+        ScrollReveal().reveal(cardContainers, { interval: 20, reset: true });
+    });
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>-RE- AETHERIUS</title>
+    </head>
+    <body style="background-color: #f7edcf;">
+
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
+    <a class="navbar-brand" href="https://recardgame.wordpress.com/"><img src="logo.png" alt="Logo" style="width: 30px; height: 30px;">  -RE- AETHERIUS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav"></ul>
+    </div>
+</nav>
+
+<!-- Banner Area -->
+<div class="container-fluid" style="padding-top: 59px;">
+    <div class="row">
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-blue" href="./BlueFides.html"><span class="hover-text">Blue</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-green" href="./GreenFides.html"><span class="hover-text">Green</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-purple" href="./PurpleFides.html"><span class="hover-text">Purple</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-red" href="./RedFides.html"><span class="hover-text">Red</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-white" href="./WhiteFides.html"><span class="hover-text">White</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-yellow" href="./YellowFides.html"><span class="hover-text">Yellow</span></a>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="container-fluid">
+    <!-- Sub-class buttons-->
+    <div class="d-flex justify-content-center align-items-center vh-20">
+        <h1 class="d-flex gap-2 button-container">
+            <a href="./BlueFides.html" class="hvr-underline-from-center selected">FIDES</a>
+            <a href="./BlueItems.html" class="hvr-underline-from-center">ITEMS</a>
+        </h1>
+    </div>
+    <div class="row" id="cardDisplay">
+        <!-- Card display area will be dynamically populated here -->
+        <!-- Example: -->
+        <!-- <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card Sub-Name</h6>
+                    <p class="card-text">Card Description</p>
+                    <!-- Add more card details here -->
+                <!-- </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<div id="myModal" class="modal" >
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="background-color: #f7edcf;">
+            <div class="row">
+                <div class="col-md-6">
+                    <img id="modalImg" src="" alt="Card Image" class="img-fluid">
+                </div>
+                <div class="col-md-6" id="modalDescriptionWindow">
+                  <!-- Detailed card description will be displayed here -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-description py-4 px-4" id="modalDescription">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+<link rel="icon" type="image/x-icon" href="logo.png">
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+    // Call populateCards function when the page is fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+
+        //modal~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        const modal = document.getElementById("myModal");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        const modalImg = document.getElementById("modalImg");
+        const modalDescription = document.getElementById("modalDescription");
+        const cardContainer = document.getElementById("cardDisplay");
+        const basePath = "cards/";
+
+        // Function to open modal with card details
+        function openModal(card) {
+            // Set image source and other card details
+            modalImg.src = `${basePath}${card.folder}/${card.id}.png`;
+            //modal content here
+            modalDescription.innerHTML = `
+            <table class="table custom-table">
+                <tbody>
+                    <tr>
+                        <th colspan="2" class="h2">${card.name}<br>${card.subName}</th>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Level</th>
+                        <td class="h4">${card.level}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Mana Cost</th>
+                        <td class="h4">${card.Cost}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Terrain Suitability</th>
+                        <td class="h4">${card.terrain}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Common Trait</th>
+                        <td class="h4">${card.trait}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Combat Power</th>
+                        <td class="h4">${card.power}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Ability</th>
+                        <td class="h4">${card.description}</td>
+                    </tr>
+                </tbody>
+            </table>
+            `;
+          // Display the modal
+          modal.style.display = "block";
+        }
+
+        // Close modal when close button is clicked
+        closeBtn.onclick = function() {
+          modal.style.display = "none";
+        };
+
+        // Close modal when user clicks outside the modal content
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+
+        //modal end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // Card data here
+        const cardData = [
+            { id: "BI001", name: "", subName: "Apprentice's Hand Script (Apprentice)", level: "2", Cost: "2B", folder: "BlueItems", type: "Item", terrain: "", trait: "", power: "0-0-0", description: "1. A: This card gains 3 Zap Tokens 2: Anytime (1B) ▷ This card loses 1 Zap token > You draw 1 card, resolving this ability is treated as an Event enters play" },
+            { id: "BI002", name: "Arc", subName: "(Swordsman)", level: "2", Cost: "1B", folder: "BlueItems", type: "Item", terrain: "", trait: "", power: "+2-0-0", description: "Any Battle Phase: (1B) > Target Fides in the same Battle-area of this card ▷ Gains 1 Zap Token > -1 Health until the end of turn > Equipped Fides gains Overwhelming until the end of turn" },
+            { id: "BI003", name: "", subName: "Thunderbolt Spear (Soldier)", level: "2", Cost: "1B", folder: "BlueItems", type: "Item", terrain: "", trait: "", power: "+1-+1-0", description: "Any Battle Phase: (1B) ▷ Destroy this card > Target Fides > Gains 1 Zap Token > Gains 1 -1 Power Token > Equipped Fides Gain First strike until the end of turn" },
+            { id: "BI004", name: "Darkness", subName: "Arcane Shield (Wayne)", level: "4", Cost: "2B", folder: "BlueItems", type: "Item", terrain: "", trait: "Flexible", power: "0-0-+2", description: "A: If this card enter play in Any Battle Phase > Target player summoning card > Counter > Equipped Fides gains 1 +1 Power Token" },
+            { id: "BI005", name: "The Mirrage", subName: "(Sorcerer)", level: "4", Cost: "2B", folder: "BlueItems", type: "Item", terrain: "+A", trait: "Shield(1)", power: "0-+2-0", description: "C: When equipped Fides receives damage> Add 1 Token on this card > Void the damage (received) > If 3+ Token on this card > Destroy this card > You receive 9 damage" },
+            { id: "BE001", name: "", subName: "Intensified Mobilization", level: "2", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Self Attack Phase: You draw 1 card > If you have less or equal number of cards in your hand than one of the enemy player > You draw 1 card" },
+            { id: "BE002", name: "", subName: "No Way!", level: "2", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Anytime: Target summoning non-Fides card > Counter" },
+            { id: "BE003", name: "", subName: "Sabotaging Specialist", level: "2", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Anytime: Target summoning non-Event card > Loses all text until the end of turn > Tap > if the game is in Stage II and your Ace Silver is in Play > You choose 1 Text of that card > It loses that Text Forever" },
+            { id: "BE004", name: "", subName: "Skyward Enchantment", level: "2", Cost: "1B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle phase: Target Fides in Battle-area ▷ Tap > If that Fides in A Battle-area > You heal 4 " },
+            { id: "BE005", name: "", subName: "Spell: Chain Lightning", level: "2", Cost: "1B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target 2 Fides in the same area ▷ Gain 1 Zap Token > All Power -1 until the end of turn" },
+            { id: "BE006", name: "", subName: "Spell: Fireball", level: "2", Cost: "1B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target Fides ▷ Receives 2 damage > Gains 1 Fire Token" },
+            { id: "BE007", name: "", subName: "Spell: Induced Fatigue", level: "2", Cost: "1B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target Level 4- non-Ace Fides ▷ Tap" },
+            { id: "BE008", name: "", subName: "Spell: Protection", level: "2", Cost: "1B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Targt Fides or player ▷ Gains Shield(4) until the end of turn" },
+            { id: "BE009", name: "", subName: "Tactics: High Ground", level: "2", Cost: "1B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target Battle-area ▷ All your Fides in that Battle-area > Gains Shield(1) and +1 Ranged power in this turn" },
+            { id: "BE010", name: "", subName: "Elemental Overflow", level: "3", Cost: "1B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Remove 3 any Elemental Token from any enemy Fides > Target player > Receives 6 damage > Target Fides > Receives 3 damage > You heal 3 " },
+            { id: "BE011", name: "", subName: "Knowledge is Power", level: "3", Cost: "1B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Anytime: Choose 1 Effect: 1. Target summoning Event > Counter 2. Target Fides > Receive 1 damage > Gains 1 any Elemental Token     3. Targer Fides > +2 Health until the end of turn > You heal 2" },
+            { id: "BE012", name: "", subName: "Metamorphosis Elixir", level: "3", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target Fides in Battle-area ▷ Return to its owner hand > Execute 1 Morpho Token with G-A and x/x/x at the same position (x = Level of that Fides)" },
+            { id: "BE013", name: "", subName: "Spell: Enchanted Illusion", level: "3", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target Fides in Battle-area ▷ Return to its owner hand" },
+            { id: "BE014", name: "", subName: "Spell: Slience", level: "3", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target Fides in Battle-area ▷ Loses all text until the end of turn" },
+            { id: "BE015", name: "", subName: "Spell: Mud Wall", level: "3", Cost: "1B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target player ▷ Gains Shield(4) until the end of turn, Gains Shield(5) instead if the game is in Stage II and your Ace Tiffany is in play, You heal 1 per damage prevented by shield in this turn (Max.15)" },
+            { id: "BE016", name: "", subName: "Spell: Skybolt", level: "3", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: Target Fides ▷ If you control 1+ Sorcerer Fides > That Fides loses 1 Zap Token > Receives 6 damage" },
+            { id: "BE017", name: "", subName: "Again and Again", level: "4", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Anytime: Trash 2 Event in your graveyard > Take 2-3 Event from your graveyard to your hand > If the game is in Stage II and your Ace Nyx is in play > You may execute 1 Event from hand with Level -1 & Mana-cost -1" },
+            { id: "BE018", name: "", subName: "Suicide Team", level: "4", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "1. S: If the game is in Stage II and your Ace Silver is in play > This card can be summoned during Self Battle Phase 2. Self Defence Phase: Target X Fides in the same Battle-area of this card ▷ Trash > Target player > Receives x damage > Target Level x- non-Ace card > Return to the top of its owner deck (Max.8 for x) " },
+            { id: "BE019", name: "", subName: "Spell: Destructive Landslide", level: "5", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Damage Phase: Target Battle-area ▷ All Fides in that Battle-area Health fix at 1 in this turn > If the game is in Stage II and your Ace is Tiffany > Target Fides in that Battle-area > Receive 1 damage" },
+            { id: "BE020", name: "", subName: "Warfare Mastermind", level: "5", Cost: "3B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "1. S: If the game is in Stage II and your Ace Nyx is in play> This card Level -2 and Mana-cost -1 2. Anytime: Counter all summoning card in this resolve > Deactivate all activating Active ability in this Resolve (Summoning this card cannot be Cut-in)" },
+            { id: "BE021", name: "", subName: "Spell: Bizzard", level: "9", Cost: "6B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "1. S: This card Level -1 & Mana-cost -1 per Sorcerer Fides you control 2. Any Battle phase: All Enemy Fides gain 1 Frost Token > Tap" },
+            { id: "BE022", name: "", subName: "Spell : Weapon Away!", level: "1", Cost: "1B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "1. Anytime: Target Summoning Item > Counter > Trash > You draw 1 card" },
+            { id: "BE023", name: "", subName: "Mana Withered", level: "2", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Self Turn: Target Fides with Power-spot in Summon-area ▷ Return to the top of its owner deck" },
+            { id: "BE024", name: "", subName: "Captured Secrets", level: "3", Cost: "1B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Anytime: You discard 1 card from your Trophy area  ▷ Target Summoning card > Counter > Return to the top of its owner deck" },
+            { id: "BE025", name: "", subName: "Spell: Flying Protection", level: "3", Cost: "1B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Anytime: Target Fides with Swift ▷ Recover > You may (1R) > That Fides gains 2 +1 Power Token" },
+            { id: "BE026", name: "", subName: "Spell: Induced Fury", level: "3", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Enemy Attack Phase: Target non-Ace Enemy Fides ▷ If that Fides has the highest Melee power among all other non-Ace Fides > Move to your Summon-area > Return that Fides to its owner Summon-area at the end of turn " },
+            { id: "BE027", name: "", subName: "Study of Ancient Technology", level: "4", Cost: "2B", folder: "BlueItems", type: "Event", terrain: "", trait: "", power: "", description: "Anytime: Execute 1 Level 4- Event from any Graveyard for Free > If that Event is Purple or Red > Target Fides > Gains First strike and 1 +1 Power Token (The Event must be summon-able in this phase)*" },
+            { id: "BA001", name: "Chantings: Cataclysmic Wave", subName: "", level: "3", Cost: "2B", folder: "BlueItems", type: "Aura", terrain: "", trait: "", power: "", description: "1. Self Battl Phase: (Self) > Remove 10 Chanting Token on this card > Target 1-3 Fides ▷ Return to its owner hand > Target Player > Receives 8 damage > Trash this card 2. C: When you start turn > Add 1 Chanting Token on this card per Sorcerer Fides you control" },
+            { id: "BA002", name: "Sorcerer Union", subName: "", level: "3", Cost: "2B", folder: "BlueItems", type: "Aura", terrain: "", trait: "", power: "", description: "1. Self Prepare Phase: (Self)(1) > Target your Sorcerer Fides ▷ Tap > You draw 1 card 2. Anytime: (Self)(2) > Target your Sorcerer Fides ▷ Gains Indestructible until the end of turn > Trash this card" },
+            { id: "BA003", name: "Competitive Innovation", subName: "", level: "3", Cost: "2B", folder: "BlueItems", type: "Aura", terrain: "", trait: "", power: "", description: "C: When your Event enters play > You may (1B)(1W) > If you control 1+ Sorcerer and 1+ Alchemist Fides > You execute 2 Soldier Tokens > Target Fides/ player > Receives 3 damage" },
+            { id: "BA004", name: "Spiritual Vein", subName: "", level: "3", Cost: "2B", folder: "BlueItems", type: "Aura", terrain: "", trait: "", power: "", description: "C: When your Event enters play first time in a turn > You may (1G) > You execute 2 Wolf Token > You heal 2" },
+        ];
+
+        // Loop through cardData and create card elements with image paths
+        cardData.forEach(card => {
+            const imagePath = `${basePath}${card.folder}/${card.id}.png`; // Construct image path
+            const cardHtml = `
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                <div class="card-container">
+                    <div class="card">
+                        <button class="card-button">
+                            <img src="${imagePath}" class="card-img-top" alt="${card.name}">
+                            <div class="card-text">
+                                <p>${card.description}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            // Append card HTML to card container
+            cardContainer.innerHTML += cardHtml;
+        });
+
+        // Add hover behavior to each card image
+        const cardContainers = document.querySelectorAll(".card-container");
+        const cardImages = document.querySelectorAll(".card-button");
+        cardContainers.forEach(container => {
+            const cardText = container.querySelector(".card-text");
+            //const cardText = image.nextElementSibling; // Get the card-text element (sibling of the image)
+
+            // Show card text on image hover
+            container.addEventListener("mouseenter", () => {
+                cardText.style.opacity = "1";
+                cardText.style.zIndex = "1";
+            });
+
+            // Hide card text when mouse leaves the image
+            container.addEventListener("mouseleave", () => {
+                cardText.style.opacity = "0";
+                cardText.style.zIndex = "0";
+            });
+
+            container.addEventListener("click", () => {
+            const cardIndex = Array.from(cardContainers).indexOf(container); // Get the index of the clicked card
+            const selectedCard = cardData[cardIndex]; // Get the corresponding card data
+            openModal(selectedCard); // Open modal with selected card data
+            });
+        });
+
+        ScrollReveal().reveal(cardContainers, { interval: 20, reset: true });
+    });
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>-RE- AETHERIUS</title>
+    </head>
+    <body style="background-color: #f7edcf;">
+
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
+    <a class="navbar-brand" href="https://recardgame.wordpress.com/"><img src="logo.png" alt="Logo" style="width: 30px; height: 30px;">  -RE- AETHERIUS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav"></ul>
+    </div>
+</nav>
+
+<!-- Banner Area -->
+<div class="container-fluid" style="padding-top: 59px;">
+    <div class="row">
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-blue" href="./BlueItems.html"><span class="hover-text">Blue</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-green" href="./GreenItems.html"><span class="hover-text">Green</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-purple" href="./PurpleItems.html"><span class="hover-text">Purple</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-red" href="./RedItems.html"><span class="hover-text">Red</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-white" href="./WhiteItems.html"><span class="hover-text">White</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-yellow" href="./YellowItems.html"><span class="hover-text">Yellow</span></a>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="container-fluid">
+    <!-- Sub-class buttons-->
+    <div class="d-flex justify-content-center align-items-center vh-20">
+        <h1 class="d-flex gap-2 button-container">
+            <a href="./BlueFides.html" class="hvr-underline-from-center">FIDES</a>
+            <a href="./BlueItems.html" class="hvr-underline-from-center selected">ITEMS</a>
+        </h1>
+    </div>
+    <div class="row" id="cardDisplay">
+        <!-- Card display area will be dynamically populated here -->
+        <!-- Example: -->
+        <!-- <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card Sub-Name</h6>
+                    <p class="card-text">Card Description</p>
+                    <!-- Add more card details here -->
+                <!-- </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<div id="myModal" class="modal" >
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="background-color: #f7edcf;">
+            <div class="row">
+                <div class="col-md-6">
+                    <img id="modalImg" src="" alt="Card Image" class="img-fluid">
+                </div>
+                <div class="col-md-6" id="modalDescriptionWindow">
+                  <!-- Detailed card description will be displayed here -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-description py-4 px-4" id="modalDescription">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

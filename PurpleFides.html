@@ -1,0 +1,250 @@
+<link rel="icon" type="image/x-icon" href="logo.png">
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+    // Call populateCards function when the page is fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+
+        //modal~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        const modal = document.getElementById("myModal");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        const modalImg = document.getElementById("modalImg");
+        const modalDescription = document.getElementById("modalDescription");
+        const cardContainer = document.getElementById("cardDisplay");
+        const basePath = "cards/";
+
+        // Function to open modal with card details
+        function openModal(card) {
+            // Set image source and other card details
+            modalImg.src = `${basePath}${card.folder}/${card.id}.png`;
+            //modal content here
+            modalDescription.innerHTML = `
+            <table class="table custom-table">
+                <tbody>
+                    <tr>
+                        <th colspan="2" class="h2">${card.name}<br>${card.subName}</th>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Level</th>
+                        <td class="h4">${card.level}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Mana Cost</th>
+                        <td class="h4">${card.Cost}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Terrain Suitability</th>
+                        <td class="h4">${card.terrain}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Common Trait</th>
+                        <td class="h4">${card.trait}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Combat Power</th>
+                        <td class="h4">${card.power}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Ability</th>
+                        <td class="h4">${card.description}</td>
+                    </tr>
+                </tbody>
+            </table>
+            `;
+          // Display the modal
+          modal.style.display = "block";
+        }
+
+        // Close modal when close button is clicked
+        closeBtn.onclick = function() {
+          modal.style.display = "none";
+        };
+
+        // Close modal when user clicks outside the modal content
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+
+        //modal end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // Card data here
+        const cardData = [
+        { id: "PF001", name: "", subName: "Arcane Shield Drone", level: "1", Cost: "1P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "Flexible/Swift", power: "1-0-2", description: "1. A: Target Fides > +2 Healt until end of turn 2. P: Fides right behind this card in Battle-line use its Melee power instead of Ranged power to deal Battle-area" },
+        { id: "PF002", name: "", subName: "Ceremonial Doves", level: "1", Cost: "1P", folder: "PurpleFides", type: "Fides", terrain: "A", trait: "Power-spot/Flexible", power: "0-0-1", description: "1. A: Target Summoning card cannot be Counter 2. C: When end turn > You heal 1" },
+        { id: "PF003", name: "", subName: "Fabriazzo Holy Soldier", level: "1", Cost: "1P", folder: "PurpleFides", type: "Fides", terrain: "G", trait: "Power-spot", power: "1-1-1", description: "1. A: You draw 1 card at the end of turn 2. C: When your Ace Deploy > This card All power +1" },
+        { id: "PF004", name: "", subName: "Fabriazzo Holy Water Peddler", level: "1", Cost: "1P", folder: "PurpleFides", type: "Fides", terrain: "", trait: "Power-spot/ Mageward(1)", power: "0-0-1", description: "1. A: This card gains 1 Zap Token > You draw 1 card at the end of turn 2. C: When this card Tap > You may (1) > This card loses 1 Zap Token > Target Fides > Gains 1 +1 Power Token > Loses 1 Elemental Token" },
+        { id: "PF005", name: "Logistic Unit ", subName: "Construction", level: "1", Cost: "1P", folder: "PurpleFides", type: "Fides", terrain: "", trait: "Power-spot/ Supply(2)", power: "0-0-4", description: "1. A: Target Fides > Carry(1) 2. Enemy Defence Phase: (1P) ▷ Take 1 Carrying card and discard 1 Carrying card under this card > Target your Fides > Move to a Battle-area at any position of your side" },
+        { id: "PF006", name: "Po", subName: "Recycle Robot", level: "1", Cost: "1P", folder: "PurpleFides", type: "Fides", terrain: "G", trait: "Power-spot", power: "0-0-2", description: "C: When your Fides leaves play > You may (Self) > Target Fides > Take 1 card from your Graveyard as Carrying card" },
+        { id: "PF007", name: "Thunderstone Monoliths ", subName: "Fabriazzo Construction", level: "1", Cost: "1P", folder: "PurpleFides", type: "Fides", terrain: "", trait: "Power-spot", power: "0-0-4", description: "C: When this card Tap > Target Fides > Gains 1 Zap Token 2. C: Enemy Fides with 2+ Zap Token leaves play > You may draw 2 cards > Trash this card" },
+        { id: "PF008", name: "", subName: "Construction- Arcane Shell Production Unit", level: "2", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "G", trait: "Power-spot/ Wall", power: "0-2-3", description: "P: All your Mech Fides gain this text: [Any Damage Phase: (0) ▷ Target Fides in the same Battle-area of this card > Receives 1 damage]" },
+        { id: "PF009", name: "Booster Research Unit", subName: "Construction", level: "2", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "", trait: "Power-spot", power: "0-0-4", description: "1. A: Target Fides > Carry(1) 2. Any Prepare Phase: (1P) ▷  Choose 1 Effect: 1. Target Fides > Gains Blitz until the end of turn 2. Target Fides with Blitz > All power +1 until the end of turn" },
+        { id: "PF010", name: "Drone Production Unit", subName: "Construction", level: "2", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "", trait: "Power-spot", power: "0-0-4", description: "C: When your Drone Fides summoned into play > Execute 1 0/1/1 Drone Token with Swift & A" },
+        { id: "PF011", name: "Grand Cathedral ", subName: "Fabriazzo Construction", level: "2", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "", trait: "Power-spot", power: "0-0-3", description: "1. C: When this card Tap > Target Fides/ player > Heal 2 2. Anytime:(Self) ▷ Target Fides(not this card) > Recover > You draw 1 card > Trash this card" },
+        { id: "PF012", name: "", subName: "Ranger Drone", level: "2", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "A", trait: "Flexible/Swift", power: "3-0-2", description: "1. A: Target Summoning Event > Counter > Return to its owner hand 2. Any Battle Phase: (2P)(Self) ▷If this card in Battle-area > Target Enemy player > You Perform Scry(1) for him" },
+        { id: "PF013", name: "", subName: "Zealot of Jupiter", level: "2", Cost: "xP", folder: "PurpleFides", type: "Fides", terrain: "G", trait: "Power-spot/ Flexible", power: "0-2-3", description: "A: Target Fides in Battle-area with x- Health > Return to the top of its owner deck" },
+        { id: "PF014", name: "Colossal Statue", subName: "Fabriazzo Construction", level: "3", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "G", trait: "Power-spot/ Wall", power: "4-0-4", description: "1. A: Your Ace +1 Power Token 2. Self Turn: (2P) ▷  If your Ace's Melee power is 8+ > You draw 2 cards > Trash this card" },
+        { id: "PF015", name: "Duo ", subName: "Novice Priest of Fabriazzo ", level: "3", Cost: "3P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "Power-spot/ Blitz", power: "4-2-4", description: "1. Any Attack Phase(Pre-Default Action): (1P)(Faith) ▷ All your Priest Fides gain Swift until the end of turn > Lose G and all power -1 until the end of turn 2. P: All your Priest Fides in the same area of this card +2 Melee" },
+        { id: "PF016", name: "", subName: "Empire Soldier Holy Crusader", level: "3", Cost: "1P", folder: "PurpleFides", type: "Fides", terrain: "G", trait: "Blitz", power: "4-1-4", description: "1. C: When your Yellow Mana Tap First time in a turn > This card all power +1 until the end of turn > You execute 1 Soldier Token 2. C: When your Blue Mana Tap first time in a turn > Target Fides > Loses or gains 1 Elemental Token " },
+        { id: "PF017", name: "", subName: "Kamikaze Drone", level: "3", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "A", trait: "Swift", power: "5-0-2", description: "C: When this card deals battle damage to player > That player reveals his hand > You choose 1 card from that player hand to discard > Destroy this card > Target Fides > Carry(1)" },
+        { id: "PF018", name: "", subName: "Flamethrower Drone", level: "3", Cost: "1P", folder: "PurpleFides", type: "Fides", terrain: "A", trait: "Flexible/Swift", power: "1-2-3", description: "Any Damage Phase: (1) ▷ If this card in Battle-area > Target Fides not in the same area of this card > Receives 1 damage > Gains 1 Fire Token" },
+        { id: "PF019", name: "Phoenix-T", subName: "Mech- Falcon Terminal", level: "3", Cost: "1P", folder: "PurpleFides", type: "Fides", terrain: "A", trait: "Blitz/ Swift", power: "3-1-2", description: "1. A: You may (1) > Target Fides > Take 1 card from your Graveyard as Carrying card 2. When this card deals Battle damage to player > Target player > Gains 1 Fire Token" },
+        { id: "PF020", name: "", subName: "Robot Guards", level: "3", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "Flexible", power: "0-1-4", description: "1. A: Target Fides > Recover > Return to its owner hand 2. Anytime: (1P) ▷ Destroy this card > Target Fides > +3 Health until the end of turn" },
+        { id: "PF021", name: "Stein-T", subName: "Mech- Terminal", level: "3", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "Blitz", power: "4-1-4", description: "C: When this card deals Battle damage to player > Target Fides > Carry(1)" },
+        { id: "PF022", name: "Thunder Crystal Obelisk", subName: "Fabriazzo Construction", level: "3", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "", trait: "Power-spot", power: "0-0-4", description: "1. C: When this card Tap > You may (1) >  Target your Fides > Gains Phantom in this Resolve > Gain 1 -1 Power Token 2. Anytime:(1P) ▷ Target 1-2 Fides > Untap > Destroy this card > You heal 4 " },
+        { id: "PF023", name: "Tres", subName: "Novice Priest of Fabriazzo ", level: "3", Cost: "3P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "Power-spot/ Blitz", power: "4-2-4", description: "1. Any Attack Phase(Pre-Default Action): (1P)(Faith) ▷ All your Priest Fides gain Overwhelming until the end of turn 2. P: All your Priest Fides in the same area of this card +2 Health" },
+        { id: "PF024", name: "Verus", subName: "Fabriazzo Exalted Inquisitor", level: "3", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "G", trait: "Power-spot", power: "3-1-3", description: "1. P: All player hand's limit reduce 4 2. P: All player hand Level +1 Mana-cost +1" },
+        { id: "PF025", name: "Berserker-T", subName: "Mech- Android Terminal", level: "4", Cost: "3P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "Overwhelming/ Blitz", power: "6-0-2", description: "1. Any Damage Phase: (1) > Your Ace discard 1 Carrying card > Target Fides in the same Battle-area of this card ▷ Receives 4 damage 2. P: This card's Health fix at 2 3. P: This card cannot be recovered" },
+        { id: "PF026", name: "Scholar-T", subName: "Mech- Android Terminal", level: "4", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "Shield(-1)", power: "2-3-4", description: "1. Self Damage Phase: (2P) ▷ If this card in Battle-area > Take 1 card from Enemy Graveyard to Your Trophy area 2. P: All card in your Trophy area Level -1 Mana-cost -1" },
+        { id: "PF027", name: "Thunderride", subName: "The Chariot -Divine Artifact", level: "4", Cost: "3P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "Overwhelming/ Blitz", power: "4-0-4", description: "1. Self Battle Phase: (1P)(Faith) ▷ All Enemy Fides in the same Battle-area with 2- Health destroy 2. P: Your Jupiter Ace gains Overwhelming" },
+        { id: "PF028", name: "Unus", subName: "Novice Priest of Fabriazzo ", level: "4", Cost: "3P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "Power-spot/ Blitz", power: "4-2-4", description: "1. C: When this card deals damage to player > You draw 1 card 2. P: All your Priest Fides in the same area of this card +2 Ranged power" },
+        { id: "PF029", name: "Cristal", subName: "Divine Spell Sorcerer", level: "5", Cost: "3P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "", power: "4-5-6", description: "1. Any Battle Phase: (2P)(Faith) > If this card in Battle-area > Targer Fides ▷ Receives 4 damage 2. Any Battle Phase: (1P)(Faith) > Target Fides ▷ Gains Shield (2) until the end of turn" },
+        { id: "PF030", name: "Marionettist-T", subName: "Mech- Android Terminal", level: "5", Cost: "3P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "Blitz/ Mageward(1)", power: "5-2-5", description: "1. Self Defence Phase: (1) ▷ Execute 1 Drone Fides from your Graveyard for free 2. Any Damage Phase: (1) ▷ Target your Drone Fides in Battle-area > Trash > Target Fides or player ▷ Receives 4 damage" },
+        { id: "PF031", name: "Stewart", subName: "High Priest of Jupiter", level: "5", Cost: "3P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "Power-spot/ Blitz", power: "6-2-6", description: "1. A: Your Ace gains 1 +1 Power Token 2. Any Battle Phase: (2P)(Faith) > Target Fides ▷  If this card in Battle-area > That Fides Tap > Gains 1 Zap Token 3. P: Zap Token on Enemy card have the Basic-effect of Frost Token" },
+        { id: "PF032", name: "Valkyrie-T ", subName: "Mech- Artillery Terminal", level: "5", Cost: "3P", folder: "PurpleFides", type: "Fides", terrain: "G", trait: "Overwhelming/ Flexible", power: "2-5-5", description: "1. A: Target your non-Fides card > Destroy > Target non-Ace Fides with 5- Health > Trash 2. Self Damage Phase: (1) > Target area ▷ If this card om Battle-area > Distribute 3 damage to any Fides in that Area" },
+        { id: "PF033", name: "", subName: "Fabriazzo Paladin Cavalry", level: "6", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "G", trait: "Power-spot/ Duelist/ Blitz", power: "7-0-7", description: "1. A: You heal 4 > You draw 1 card 2. P: All your Blue, Purple, Yellow non-Ace Fides all power +1" },
+        { id: "PF034", name: "Morpho-T", subName: "Mech- Sylph Terminal", level: "6", Cost: "3P", folder: "PurpleFides", type: "Fides", terrain: "A", trait: "Blitz/ Swift/ Mageward(1)", power: "6-2-6", description: "Self Damage Phase: (2P) > If this card in Battle-area > Target Enemy non-Ace Fides ▷ Move to Your Summon-area > Target Fides > Carry(1) > This card loses this Text" },
+        { id: "PF035", name: "Apocalypse", subName: "Mech- Ultimate Terminal", level: "7", Cost: "4P", folder: "PurpleFides", type: "Fides", terrain: "G-A", trait: "Blitz/ Overwhelming/ Mageward(1)", power: "8-3-8", description: "1. A: Target 4 your cards > Destroy > All Enemy non-Ace card destroy 2. Self Damage Phase: (2) ▷  If this card in Battle-area > Target Enemy non-Ace Fides > Destroy " },
+        { id: "PF036", name: "Ford", subName: "Empire Ambassador to Fabriazzo", level: "2", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "G", trait: "Supply(1)", power: "1-0-2", description: "1. Anytime: (2Y) ▷ You draw 2 cards > You execute 2 Soldier Tokens > This card lose this text 2. C: When 1+ enemy Fides Deploy > You Execute 1 Soldier Token" },
+        { id: "PF037", name: "Marco", subName: "Missionary to Tribe ", level: "2", Cost: "2P", folder: "PurpleFides", type: "Fides", terrain: "G", trait: "Power-spot", power: "0-0-2", description: "1. C: When Enemy player discards 1 card from the top of his deck > You may (Self)(1W) > You Trophy(1) 2. C: When your Fides destroy > You heal 1" },
+        ];
+
+        // Loop through cardData and create card elements with image paths
+        cardData.forEach(card => {
+            const imagePath = `${basePath}${card.folder}/${card.id}.png`; // Construct image path
+            const cardHtml = `
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                <div class="card-container">
+                    <div class="card">
+                        <button class="card-button">
+                            <img src="${imagePath}" class="card-img-top" alt="${card.name}">
+                            <div class="card-text">
+                                <p>${card.description}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            // Append card HTML to card container
+            cardContainer.innerHTML += cardHtml;
+        });
+
+        // Add hover behavior to each card image
+        const cardContainers = document.querySelectorAll(".card-container");
+        const cardImages = document.querySelectorAll(".card-button");
+        cardContainers.forEach(container => {
+            const cardText = container.querySelector(".card-text");
+            //const cardText = image.nextElementSibling; // Get the card-text element (sibling of the image)
+
+            // Show card text on image hover
+            container.addEventListener("mouseenter", () => {
+                cardText.style.opacity = "1";
+                cardText.style.zIndex = "1";
+            });
+
+            // Hide card text when mouse leaves the image
+            container.addEventListener("mouseleave", () => {
+                cardText.style.opacity = "0";
+                cardText.style.zIndex = "0";
+            });
+
+            container.addEventListener("click", () => {
+            const cardIndex = Array.from(cardContainers).indexOf(container); // Get the index of the clicked card
+            const selectedCard = cardData[cardIndex]; // Get the corresponding card data
+            openModal(selectedCard); // Open modal with selected card data
+            });
+        });
+
+        ScrollReveal().reveal(cardContainers, { interval: 20, reset: true });
+    });
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>-RE- AETHERIUS</title>
+    </head>
+    <body style="background-color: #f7edcf;">
+
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
+    <a class="navbar-brand" href="https://recardgame.wordpress.com/"><img src="logo.png" alt="Logo" style="width: 30px; height: 30px;">  -RE- AETHERIUS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav"></ul>
+    </div>
+</nav>
+
+<!-- Banner Area -->
+<div class="container-fluid" style="padding-top: 59px;">
+    <div class="row">
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-blue" href="./BlueFides.html"><span class="hover-text">Blue</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-green" href="./GreenFides.html"><span class="hover-text">Green</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-purple" href="./PurpleFides.html"><span class="hover-text">Purple</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-red" href="./RedFides.html"><span class="hover-text">Red</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-white" href="./WhiteFides.html"><span class="hover-text">White</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-yellow" href="./YellowFides.html"><span class="hover-text">Yellow</span></a>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="container-fluid">
+    <!-- Sub-class buttons-->
+    <div class="d-flex justify-content-center align-items-center vh-20">
+        <h1 class="d-flex gap-2 button-container">
+            <a href="./PurpleFides.html" class="hvr-underline-from-center selected">FIDES</a>
+            <a href="./PurpleItems.html" class="hvr-underline-from-center">ITEMS</a>
+        </h1>
+    </div>
+    <div class="row" id="cardDisplay">
+        <!-- Card display area will be dynamically populated here -->
+        <!-- Example: -->
+        <!-- <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card Sub-Name</h6>
+                    <p class="card-text">Card Description</p>
+                    <!-- Add more card details here -->
+                <!-- </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<div id="myModal" class="modal" >
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="background-color: #f7edcf;">
+            <div class="row">
+                <div class="col-md-6">
+                    <img id="modalImg" src="" alt="Card Image" class="img-fluid">
+                </div>
+                <div class="col-md-6" id="modalDescriptionWindow">
+                  <!-- Detailed card description will be displayed here -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-description py-4 px-4" id="modalDescription">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

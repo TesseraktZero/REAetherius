@@ -1,0 +1,252 @@
+<link rel="icon" type="image/x-icon" href="logo.png">
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+    // Call populateCards function when the page is fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+
+        //modal~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        const modal = document.getElementById("myModal");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        const modalImg = document.getElementById("modalImg");
+        const modalDescription = document.getElementById("modalDescription");
+        const cardContainer = document.getElementById("cardDisplay");
+        const basePath = "cards/";
+
+        // Function to open modal with card details
+        function openModal(card) {
+            // Set image source and other card details
+            modalImg.src = `${basePath}${card.folder}/${card.id}.png`;
+            //modal content here
+            modalDescription.innerHTML = `
+            <table class="table custom-table">
+                <tbody>
+                    <tr>
+                        <th colspan="2" class="h2">${card.name}<br>${card.subName}</th>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Level</th>
+                        <td class="h4">${card.level}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Mana Cost</th>
+                        <td class="h4">${card.Cost}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Terrain Suitability</th>
+                        <td class="h4">${card.terrain}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Common Trait</th>
+                        <td class="h4">${card.trait}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Combat Power</th>
+                        <td class="h4">${card.power}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Ability</th>
+                        <td class="h4">${card.description}</td>
+                    </tr>
+                </tbody>
+            </table>
+            `;
+          // Display the modal
+          modal.style.display = "block";
+        }
+
+        // Close modal when close button is clicked
+        closeBtn.onclick = function() {
+          modal.style.display = "none";
+        };
+
+        // Close modal when user clicks outside the modal content
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+
+        //modal end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // Card data here
+        const cardData = [
+        { id: "RF001", name: "Dragon Eden", subName: "Dragon Construction", level: "1", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "", trait: "Supply(1)/ Power-spot", power: "0-0-4", description: "P: Level 4+ Dragon card in your hand Level -1 &  Mana-cost -1" },
+        { id: "RF002", name: "", subName: "Insectrix-Blaze Swarm", level: "1", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Flexible", power: "1-1-1", description: "Any Defence Phase: (1R) ▷ Destroy this card > All Fides in the same area of this card move back to their Summon-area > Gain 1 Fire Token > You heal 2 > Trash this card" },
+        { id: "RF003", name: "", subName: "Insectrix-Fire Killer Wasp", level: "1", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Blitz", power: "2-0-1", description: "C: When this card leaves play > Target Fides > Receives 1 damage > Target Fides > Gains 1 Fire Token > Target Fides > Gain 1 Poison Token" },
+        { id: "RF004", name: "", subName: "Insectrix-Fire Spider", level: "1", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Reach", power: "1-1-1", description: "1. A: This card Carry(1) 2. Enemy Attack Phase(Pre-Default Action): (1) > Target Fides ▷ Take 1 Carrying card under this card > Tjat Fides cannot Attack this turn > Gains 1 Fire Token" },
+        { id: "RF005", name: "Pternia", subName: "Zephyra’s Dragon Servant Pet ", level: "1", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Mageward(1)/Swift", power: "0-1-2", description: "1. Any Attack Phase(Pre-Default Action): (1R) > Target Fides ▷ Gain G-A until the end of turn > This card return to the top of its owner Damage pile at the end of turn 2. When a Fides gains A first time in a turn (Include G-A) > That Fides gains Mageward(1) and +1 Health until the end of turn (Terrain suitability upgrade from item also activate this effect)" },
+        { id: "RF006", name: "", subName: "Volcanic Spirima", level: "1", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Flexible", power: "1-1-1", description: "A: Target Fides > Gains 1 Fire Token > You draw 1 card at the end of turn" },
+        { id: "RF007", name: "", subName: "Wild-Humming Bird", level: "1", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "A", trait: "Swift", power: "2-0-1", description: "1. C: When this card deals battle damage to player > Destroy this card > You draw 2 cards > You discard 1 card from hand 2. When this card leaves play > You draw 1 card" },
+        { id: "RF008", name: "Aquiro", subName: "Dragonborne", level: "2", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Flexible/Transform", power: "3-1-3", description: "1. A: Target summoning Event or Item > Counter > This card Carry(1) 2. Any Battle Phase: (1) ▷ Take 1 Carrying card under this card > Target Fides > Gains Shield(3) Until the end of turn" },
+        { id: "RF009", name: "Darwin", subName: "Dwarf Ambassador", level: "2", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "G", trait: "", power: "3-0-4", description: "1. Self Prepare Phase: (1R) ▷ Reveal and set 1 Dragon card from you hand under this card as a Gift, which is treated as card in your hand> You draw 1 card 2. If 2+ Gift set under this card > All your Dwarf Fides +2 Melee power and +2 Health" },
+        { id: "RF010", name: "Nova", subName: "Scout of Mystery Land", level: "2", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Flexible", power: "3-0-3", description: "1. Anytime:(0) ▷ You Scry(1) 2. C: When Fides gains any Elemental Token > You may (1R) > That Fides gains 1 any Elemental Token > This card loses this text until the end of turn" },
+        { id: "RF011", name: "Orin", subName: "Dwarf Smith", level: "2", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "G", trait: "", power: "3-0-4", description: "1. C: When your Fides enter play > That Fides may Carry(1) 2. C: When your Item enter play > You may take 1 Carrying card under the equipping Fides(of that Item) > That Fides gain 1 +1 Power Token" },
+        { id: "RF012", name: "Oz", subName: "Volcanic Explorer", level: "2", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "G", trait: "", power: "3-1-3", description: "Any Damage Phase: (1R) ▷ If this card in Battle-area > Look at the top 2 card of Your deck > Take 1 card to your hand and discard the rest" },
+        { id: "RF013", name: "Twinkle", subName: "Dragonborne", level: "2", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Blitz/Transform", power: "1-3-3", description: "1. A: Target Fides > Melee power fix at 3 until the end of turn > This card Carry(1) 2. Any Battle Phase:(1) ▷ Take 1 Carrying card under this card > Target Fides > Melee power fix at 6 until the end of turn" },
+        { id: "RF014", name: "Acorn ", subName: "Construction- Averial Citadels ", level: "3", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "A", trait: "Supply(1)/ Power-spot/Swift/Mageward(1)", power: "0-3-6", description: "1. C: This card enters play or your Fides with Swift deals battle damage to player first time in a turn > Target Fides > Carry(1) 2. Any Attack Phase: (2R) ▷ Take 2 Carrying card under this card> Target Fides > All power +3 until the end of turn > Gains A and Swift until the end of turn" },
+        { id: "RF015", name: "Ashara", subName: "Dragonborne", level: "3", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Blitz/Transform", power: "4-1-4", description: "Any Battle Phase:(1R) ▷ If this card in Battle-area > Target 2 Fides > Gains 1 Fire Token > This card Carry(1) > You may (1) > Those FIdes receive 1 damage > You may take 1 Carrying card under this card" },
+        { id: "RF016", name: "", subName: "Dwarf- Hammer Thrower", level: "3", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Reach/Flexible/Overwhelming", power: "4-0-4", description: "1. Any Battle Phase: (1R) ▷ Target Fides in the same Battle-area of this card > Receives 3 damage > This card gains 1 -1 Power Token 2. This card cannot Attack in A Battle-area" },
+        { id: "RF017", name: "", subName: "Insectrix-Lava Stinger", level: "3", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "G", trait: "Blitz", power: "4-0-4", description: "Any Damage Phase: (1R) ▷ All Fides in the same Battle area of this card gain 1 Fire Token and 1 Poison Token" },
+        { id: "RF018", name: "", subName: "Insectrix-Volcanic Moth", level: "3", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "A", trait: "Reach/Flexible/Mageward(1)", power: "4-0-4", description: "A: Target Fides(not this card) > Return to its owner hand at the end of turn > Gains Phantom until the end of turn" },
+        { id: "RF019", name: "Julie", subName: "Averial Guardian Novice", level: "3", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "A", trait: "Flexible/Swift", power: "3-0-3", description: "1. P: This card gains +2 Melee power in enemy turn 2. C: When this card destroyed in enemy turn > You draw 1 card > You heal 2" },
+        { id: "RF020", name: "Onyx", subName: "Elf Volcano Geologist", level: "3", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "G", trait: "", power: "1-1-4", description: "1. A: Target Fides > Carry(1) 2. Any Battle Phase: (2R) ▷ Take 1 Carrying card under this card > Target Fides > Gains Phantom in this Resolve 3. C When this card Return(to Summon--area) in your turn > Target Fides > Carry(1) " },
+        { id: "RF021", name: "", subName: "Averial Swordsman", level: "4", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "A", trait: "Swift/Blitz", power: "4-0-4", description: "-" },
+        { id: "RF022", name: "", subName: "Fire Golem", level: "4", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Slow/Overwhelming/Flexible", power: "6-0-5", description: "A: Target Fides with Fire Token > Return to its owner hand > You heal 2" },
+        { id: "RF023", name: "Golden Cleaver", subName: "Dwarf Warrior", level: "4", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "G", trait: "Overwhelming/Blitz", power: "5-0-5", description: "A: You may execute Silver Cleaver from your hand for free > You draw 1 card ( If Silver Cleaver is already in play of your side, you canot execute it in this effect)" },
+        { id: "RF024", name: "Silver Cleaver", subName: "Dwarf Warrior", level: "4", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "G", trait: "First strike/Blitz", power: "5-0-5", description: "A: You may execute Golden Cleaver from your hand for free > You draw 1 card ( If Golden Cleaver is already in play of your side, you canot execute it in this effect)" },
+        { id: "RF025", name: "", subName: "Young Fire Dragon", level: "4", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "A", trait: "Swift", power: "4-1-4", description: "1. Self Damage Phase:(1R) > If this card in Battle-area ▷ Target Construction Fides > Receives 4 damage 2. Enemy Damage Phase: (1R) > If this card in Battle-area > Target Fides ▷ Receives 2 damage > Gains 1 Fire Token" },
+        { id: "RF026", name: "Eira", subName: "Elemental Sorcerer", level: "5", Cost: "3R/B", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Flexible/Shield(1)", power: "3-4-5", description: "1. A: Target 2 Fides > Gain 1 Fire Token > Target Level x- Summoning card > Counter (x= number of Fire Token in play) 2. Any Battle Phase: (2R) > Target Fides ▷ Loses 1 Fire Token > Receive 3 damage or gains 1 Fire Token & 1 Frost Token " },
+        { id: "RF027", name: "Gromm", subName: "Dwarf Marauder", level: "5", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "G", trait: "Overwhelming/Blitz", power: "6-0-6", description: "A: Target enemy Aura or Item > For Aura, move that Aura to your Summon-area; For Item, Equip that Item to this card > You heal 4" },
+        { id: "RF028", name: "", subName: "Mount- Wild-Griffin", level: "5", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "A", trait: "Swift/Flexible", power: "5-0-4", description: "Any Battle Phase: (1) ▷ Move this card to G Battle-area at any position of your side > Distribute 4 damage to enemy Fides in G Battle-area > Trash this card at the end of turn" },
+        { id: "RF029", name: "", subName: "Wild- Fire Salamander", level: "5", Cost: "2R", folder: "RedFides", type: "Fides", terrain: "G", trait: "Blitz/ Overwhelming", power: "5-3-5", description: "1. Any Battle Phase: (1R) ▷ Target 1-2 Fides> Gain 1 Fire Token 2. P: Fides with Fire Token -1 Melee power -1 Ranged power" },
+        { id: "RF030", name: "Aquiro ", subName: "Aqua Dragon- Triton", level: "6", Cost: "3R", folder: "RedFides", type: "Fides", terrain: "A", trait: "Flexible/Swift/Transform", power: "6-3-6", description: "1. S: This card can Transform in Any Prepare Phase 2. A: You may take 1 Carrying card or (3) > Target Summoning card > Counter" },
+        { id: "RF031", name: "Swan", subName: "The Twelve of Averial", level: "6", Cost: "3R", folder: "RedFides", type: "Fides", terrain: "A", trait: "Swift/Flexible", power: "6-2-6", description: "1. A: You heal 4 2. Any Defence Phase: (1R) ▷ Target Battle-area > All enemy Fides in that Battle-area cannot deals Battle damage to you in this turn > You heal 2 > Trash this card at the end of turn" },
+        { id: "RF032", name: "Twinkle", subName: "Illusion Dragon- Nebula", level: "6", Cost: "3R", folder: "RedFides", type: "Fides", terrain: "A", trait: "Flexible/Swift/Transform", power: "6-3-6", description: "A: You may take 1 Carry card under this card or (3) > Target player > Cannot summon any cards and Activate any Active Ability in the Battle Phase of this turn" },
+        { id: "RF033", name: "Ashara", subName: "Fire Dragon- Inferno", level: "7", Cost: "3R", folder: "RedFides", type: "Fides", terrain: "G", trait: "Blitz/Overwhelming/Transform", power: "10-3-10", description: "Any Battle Phase: (2) ▷ Discard 1 Carrying card under this card > Target leading Fides in the same Battle-area of this card > Receives 8 Piercing damage > All Fides in the same Battle-area gain 1 Fire Token" },
+        { id: "RF034", name: "Balthazar", subName: "Colossal Tortoise", level: "8", Cost: "5R", folder: "RedFides", type: "Fides", terrain: "BEHEMOTH", trait: "Reach/Static", power: "+6-0-20", description: "1. P: All enemy Fides in A Battle-area Melee power -1 Ranged power -1 if this card is in Battle-area 2. P: This card deals battle damage to G Battle-area only 3. C: When this card deals Battle damage to player > That player lose" },
+        { id: "RF035", name: "Crimson", subName: "Zeppelin Jellyfish", level: "8", Cost: "5R", folder: "RedFides", type: "Fides", terrain: "BEHEMOTH", trait: "Reach/Static", power: "+2-0-20", description: "1. P: This card never Return(to Summon-area) 2.Self Damage Phase (1R) ▷ If this card in Battle-area > All enemy Fides Gain 1 Zap Token and 1 Fire Token > All enemy player receive 1 damage per Fire Token on their Fides" },
+        { id: "RF036", name: "Rudra", subName: "Ancient Dragon", level: "8", Cost: "5R", folder: "RedFides", type: "Fides", terrain: "BEHEMOTH", trait: "", power: "+6-0-14", description: "1. A: Move this card to Battle-area 2. P: This card never Return(to Summon-area) 3. When you end turn > All enemy player receive 6 damage 3. When you start turn > You receive 4 damage" },
+        { id: "RF037", name: "", subName: "Costruction- Ore Processing Unit", level: "2", Cost: "1R", folder: "RedFides", type: "Fides", terrain: "", trait: "Power-spot", power: "0-0-4", description: "1. Anytime:(0) ▷ This card loses 2 Zap Tokens > The Next card you summon Level -2 Mana-cost -2 > Target your Mana > Untap 2. 2. C: When you start turn > You may (1P) > This card gains 1 Zap Token " },
+        { id: "RF038", name: "Skye", subName: "Mortuisects Alchemist ", level: "4", Cost: "2R/W", folder: "RedFides", type: "Fides", terrain: "G", trait: "Resurrection", power: "4-1-4", description: "1. Self Prepare Phase: (1W)(Ouro2) ▷ Execute 1 Level 4- Insectrix Fides from any Graveyard 2. C: When your Insectrix Fides leaves Play > You may (1R) > Target Fides >Gain 1 Poison Token" },
+        { id: "RF039", name: "Aeons", subName: "Sleeping Dragon ", level: "6", Cost: "3R", folder: "RedFides", type: "Fides", terrain: "G-A", trait: "Blitz/ Transform/ Overwhelming", power: "7-3-7", description: "1. S: If this card is revealed from your Hand due to Enemy Effect > You (2R) > Execute this card for free 2. C: When this card deals Battle-damage to player > Trash 0-3 card in 1 Graveyard > Target Fides > Receives 4 damage" },
+        ];
+
+        // Loop through cardData and create card elements with image paths
+        cardData.forEach(card => {
+            const imagePath = `${basePath}${card.folder}/${card.id}.png`; // Construct image path
+            const cardHtml = `
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                <div class="card-container">
+                    <div class="card">
+                        <button class="card-button">
+                            <img src="${imagePath}" class="card-img-top" alt="${card.name}">
+                            <div class="card-text">
+                                <p>${card.description}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            // Append card HTML to card container
+            cardContainer.innerHTML += cardHtml;
+        });
+
+        // Add hover behavior to each card image
+        const cardContainers = document.querySelectorAll(".card-container");
+        const cardImages = document.querySelectorAll(".card-button");
+        cardContainers.forEach(container => {
+            const cardText = container.querySelector(".card-text");
+            //const cardText = image.nextElementSibling; // Get the card-text element (sibling of the image)
+
+            // Show card text on image hover
+            container.addEventListener("mouseenter", () => {
+                cardText.style.opacity = "1";
+                cardText.style.zIndex = "1";
+            });
+
+            // Hide card text when mouse leaves the image
+            container.addEventListener("mouseleave", () => {
+                cardText.style.opacity = "0";
+                cardText.style.zIndex = "0";
+            });
+
+            container.addEventListener("click", () => {
+            const cardIndex = Array.from(cardContainers).indexOf(container); // Get the index of the clicked card
+            const selectedCard = cardData[cardIndex]; // Get the corresponding card data
+            openModal(selectedCard); // Open modal with selected card data
+            });
+        });
+
+        ScrollReveal().reveal(cardContainers, { interval: 20, reset: true });
+    });
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>-RE- AETHERIUS</title>
+    </head>
+    <body style="background-color: #f7edcf;">
+
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
+    <a class="navbar-brand" href="https://recardgame.wordpress.com/"><img src="logo.png" alt="Logo" style="width: 30px; height: 30px;">  -RE- AETHERIUS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav"></ul>
+    </div>
+</nav>
+
+<!-- Banner Area -->
+<div class="container-fluid" style="padding-top: 59px;">
+    <div class="row">
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-blue" href="./BlueFides.html"><span class="hover-text">Blue</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-green" href="./GreenFides.html"><span class="hover-text">Green</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-purple" href="./RedFides.html"><span class="hover-text">Purple</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-red" href="./RedFides.html"><span class="hover-text">Red</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-white" href="./WhiteFides.html"><span class="hover-text">White</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-yellow" href="./YellowFides.html"><span class="hover-text">Yellow</span></a>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="container-fluid">
+    <!-- Sub-class buttons-->
+    <div class="d-flex justify-content-center align-items-center vh-20">
+        <h1 class="d-flex gap-2 button-container">
+            <a href="./RedFides.html" class="hvr-underline-from-center selected">FIDES</a>
+            <a href="./RedItems.html" class="hvr-underline-from-center">ITEMS</a>
+        </h1>
+    </div>
+    <div class="row" id="cardDisplay">
+        <!-- Card display area will be dynamically populated here -->
+        <!-- Example: -->
+        <!-- <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card Sub-Name</h6>
+                    <p class="card-text">Card Description</p>
+                    <!-- Add more card details here -->
+                <!-- </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<div id="myModal" class="modal" >
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="background-color: #f7edcf;">
+            <div class="row">
+                <div class="col-md-6">
+                    <img id="modalImg" src="" alt="Card Image" class="img-fluid">
+                </div>
+                <div class="col-md-6" id="modalDescriptionWindow">
+                  <!-- Detailed card description will be displayed here -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-description py-4 px-4" id="modalDescription">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

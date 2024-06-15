@@ -1,0 +1,246 @@
+<link rel="icon" type="image/x-icon" href="logo.png">
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+    // Call populateCards function when the page is fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+
+        //modal~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        const modal = document.getElementById("myModal");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        const modalImg = document.getElementById("modalImg");
+        const modalDescription = document.getElementById("modalDescription");
+        const cardContainer = document.getElementById("cardDisplay");
+        const basePath = "cards/";
+
+        // Function to open modal with card details
+        function openModal(card) {
+            // Set image source and other card details
+            modalImg.src = `${basePath}${card.folder}/${card.id}.png`;
+            //modal content here
+            modalDescription.innerHTML = `
+            <table class="table custom-table">
+                <tbody>
+                    <tr>
+                        <th colspan="2" class="h2">${card.name}<br>${card.subName}</th>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Level</th>
+                        <td class="h4">${card.level}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Mana Cost</th>
+                        <td class="h4">${card.Cost}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Terrain Suitability</th>
+                        <td class="h4">${card.terrain}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Common Trait</th>
+                        <td class="h4">${card.trait}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Combat Power</th>
+                        <td class="h4">${card.power}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="h4">Ability</th>
+                        <td class="h4">${card.description}</td>
+                    </tr>
+                </tbody>
+            </table>
+            `;
+          // Display the modal
+          modal.style.display = "block";
+        }
+
+        // Close modal when close button is clicked
+        closeBtn.onclick = function() {
+          modal.style.display = "none";
+        };
+
+        // Close modal when user clicks outside the modal content
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+
+        //modal end~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // Card data here
+        const cardData = [
+        { id: "YI001", name: "", subName: "Bōkensha Card(Bōkensha)", level: "2", Cost: "1Y", folder: "YellowItems", type: "Item", terrain: "", trait: "", power: "0-0-0", description: "1. A: If equipped Fides is Linked Fides > You may (1) > You Trophy(1) 2. C: When Equipped Fides return from battle-area in your turn > This card gains 1 +1 Power token > You heal 2" },
+        { id: "YI002", name: "", subName: "Empire Standard Shield(Soldier)", level: "2", Cost: "1Y", folder: "YellowItems", type: "Item", terrain: "", trait: "", power: "0-0-0", description: "1. A: If equipped Fides is Linked Fides > You receive 1 damage > You execute 2 Soldier Tokens 2. P: All your Soldier Fides in the same area of this card +1 Health" },
+        { id: "YI003", name: "", subName: "Dragon Bow(Archer)", level: "3", Cost: "2Y", folder: "YellowItems", type: "Item", terrain: "+A", trait: "", power: "0-+2-0", description: "1. A: If equipped Fides is Linked Fides > Target Fides > Receives 3 damage 2. Any Damage Phase: (1) ▷ If this card in Battle-area > Target Fides not in the same area of this card > Receives 1 damage > Gains 1 Fire Token" },
+        { id: "YI004", name: "Joyesue", subName: "Cursed Greatsword(Warrior)", level: "3", Cost: "2Y", folder: "YellowItems", type: "Item", terrain: "", trait: "Overwhelming ", power: "+3-0-0", description: "1. A: If equipped Fides is Linked Fides > This card +3 Health 2. C: When equipped Fides deals battle damage to player > You may (1Y) > You discard 1 card from hand > That player randomly discards 1 card from hand" },
+        { id: "YI005", name: "", subName: "Mithril Armour(General)", level: "3", Cost: "2Y", folder: "YellowItems", type: "Item", terrain: "", trait: "Flexible", power: "0-0-+2", description: "1. A: If equipped Fides is Linked Fides > You heal 5 2. A: Equipped Fides > Recover > You heal 2" },
+        { id: "YI006", name: "Kage", subName: "Legendary Sword(Swordsman)", level: "4", Cost: "2Y", folder: "YellowItems", type: "Item", terrain: "", trait: "Flexible", power: "+3-0-0", description: "1. A: If equipped Fides is Linked Fides > Target Summoning non-Fides card > Counter 2. Any Battle Phase: (1Y) ▷ Equipped Fides gains Phantom and +3 Melee power until end of turn > Trash this card" },
+        { id: "YE001", name: "", subName: "Smoky Kitty Granade ", level: "1", Cost: "1Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Any Battle Phase: All Fides gain Shield(-1) until the end of turn > If the game is in Stage II and your Ace Jacquelyn is in play> Target Fides in Battle-area > Receives 1 damage" },
+        { id: "YE002", name: "", subName: "Tactics: Eight Trigrams Formation", level: "1", Cost: "1Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Any Return Phas: Target Battle-area ▷ All enemy Fides in that Battle-area do not return (to Summon-area) and do not restore Health at the end of turn > If the game is in Stage II and your Ace Liang is in play > Tap those Fides " },
+        { id: "YE003", name: "", subName: "Emergency Mobilization", level: "2", Cost: "1Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Any Battle Phase: You execute 3 Soldier Tokens > If you control 7- Fides > You draw 1 card > You heal 4" },
+        { id: "YE004", name: "", subName: "Tactics: Decoy", level: "2", Cost: "1Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Any Battle Phase: Target Battle-area ▷ All your Fides in that Battle-area move to the neighbour Battle-area (Keep the order), Put them behind the Final Fides (If any) in the arriving Battle-area" },
+        { id: "YE005", name: "", subName: "Tactics: Double Envelopement", level: "2", Cost: "2Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Any Battle Phase: Target your Battle-line ▷ The first 2 Fides +3 Melee power until the end of turn > The second Fides deals battle damage using its Melee power instead of Ranged power in this turn" },
+        { id: "YE006", name: "", subName: "Tactics: Testudo Formation", level: "2", Cost: "1Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Any Battle Phase: Target Battle-area ▷ All your Fides in that Battle-area -1 Melee power +3 Health in this turn" },
+        { id: "YE007", name: "", subName: "Tradition", level: "2", Cost: "2Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Anytime: Look up to 4 cards from the top of your Damage pile > Take 2 cards and put the rest back on top of your Damage pile at any order" },
+        { id: "YE008", name: "", subName: "Vibrant", level: "2", Cost: "1Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Any Battle Phase: Target Fides ▷ Untap > All power +3 until the end of turn > You heal 2" },
+        { id: "YE009", name: "", subName: "Skill: Perceptiveness", level: "3", Cost: "2Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Any Battle Phase: You discard 1 card from the top of your Damage pile or your hand > Target Level x- summoning card > Counter > Put that card in your Trophy area > If the game is in Stage II and your Ace Aotsuki is in play > Your Ace gains 2 +1 Power token" },
+        { id: "YE010", name: "", subName: "Skill: Swift Maneuver", level: "3", Cost: "1Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Any Battle Phase: Target your Fides ▷ Move to a Battle-area at any position of your side > Untap or Target summoning Event > Counter" },
+        { id: "YE011", name: "", subName: "Tactics: Cavalry Charge", level: "3", Cost: "2Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Any Battle Phase: Target Battle-line ▷ You may rearrange Fides in that Battle-line" },
+        { id: "YE012", name: "", subName: "Tactics: Massacre", level: "3", Cost: "2Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Self Attack Phase: For each your Battle-line with 3+ Fides deals battle damage to player in this turn later > Target non-Ace card > Destroy > You Trophy(1) > You heal 4" },
+        { id: "YE013", name: "", subName: "Tactics: Swarm", level: "3", Cost: "1Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Any Attack Phase(Pre-Default action): Tap x your Fides > Target enemy player > (That enemy player) Choose to Tap x Fides that player control" },
+        { id: "YE014", name: "", subName: "Tactics: Invisible Army", level: "5", Cost: "3Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "1. S: If the game is in Stage II and your Ace Liang is in play > This card can be summon or execute during Self Battle Phase 2. Enemy Battle Phase: All enemy Fides in 1 Battle-area > Move back to their Summon-area" },
+        { id: "YE015", name: "", subName: "Last Stand", level: "6", Cost: "2Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "-", description: "Self Prepare phase: Directly exhange your Deck with your Damage pile > You Trophy(1) > You heal 4 > If the game is in Stage II and your Ace Aotsuki is in play > You Trophy(1) > You heal 4" },
+        { id: "YE016", name: "", subName: "Tactics: Long Spear Formation", level: "2", Cost: "1Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Bttle Phase: Target Fides in Battle-area ▷ Loses all Common-trait of turn and cannot gain any Common-trait in this turn > You draw 1 card at the end of turn" },
+        { id: "YE017", name: "", subName: "Rapacious Nature of Empire", level: "3", Cost: "1Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "", description: "Self Prepare Phase: You execute 2 Soldier Tokens per Enemy Fides with Power-spot in play or in Enemy Graveyard > If you execte 6+ Solider Token in the effect of this card > You Trophy(1)" },
+        { id: "YE018", name: "", subName: "Spirit Never Die", level: "3", Cost: "2Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: If 5+ your Fides destroyed in Battle-area > You may (1G) > You execute 3 Soldier Tokens > You execute 2 Wolf Token > Target Enemy player > Receives 4 damage" },
+        { id: "YE019", name: "", subName: "Imperial Ordder", level: "4", Cost: "2Y ", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "", description: "Self Prepare Phase: Targt Enemy Level 4- (Duchy or Sorcerer) non-Ace Fides ▷ Move to your Summon-area" },
+        { id: "YE020", name: "", subName: "Sworn Enemy", level: "5", Cost: "2Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "", description: "Self Prepare Phase: Choose 1-2 your non-Ace Fides > Destroy > Target Enemy player > Choose the same amount of non-Ace Fides he controls > Destroy, That Enemy must choose Dragon Fides if able" },
+        { id: "YE021", name: "", subName: "For the Emperor ", level: "6", Cost: "2Y", folder: "YellowItems", type: "Event", terrain: "", trait: "", power: "", description: "Any Battle Phase: All your General Fides, Soldier Fides, Duchy Fides all power +1 until end of turn > You may (1B) > Those Fides Gain Shield(1), Overwhelming, Static until the end of turn" },
+        { id: "YA001", name: "", subName: "Taxation", level: "2", Cost: "1Y", folder: "YellowItems", type: "Aura", terrain: "", trait: "", power: "", description: "Self Prepare Phase: (Self)(xY) ▷ You receive x damage > You draw 1 card (x = number of Taxation you control)" },
+        { id: "YA002", name: "Ritualistic Culture", subName: "", level: "3", Cost: "1Y", folder: "YellowItems", type: "Aura", terrain: "", trait: "", power: "", description: "1. Self turn: (self) ▷ You discard 1 card from your Trophy area > You draw 1 card > Target Fides > Gains 1 +1 Power Token 2. P: When you draw card, You may draw from your Damage pile instead of Your Deck" },
+        { id: "YA003", name: "The Art of War", subName: "", level: "3", Cost: "2Y", folder: "YellowItems", type: "Aura", terrain: "", trait: "", power: "", description: "1. Any Battle Phase: (Self)(1Y)  ▷ Execute 1 Tactics from your hand for free (The Tactics card must be summon-able in this Phase) 2. C: When your Tactics card enters play > You draw 1 card > Heal 2 " },
+        { id: "YA004", name: "Unstable Flower", subName: "", level: "4", Cost: "2Y", folder: "YellowItems", type: "Aura", terrain: "", trait: "", power: "", description: "C: When enemy Fides destroyed by your effect > You may (Self) or Tap your Jacquelyn Fides> Choose 1 effect: 1. You Tropy(1) > You heal 2 2. You discard 1 card from your Trophy area > Target player > Receives 6 damage" },
+        { id: "YA005", name: "Dward Smith Team", subName: "", level: "2", Cost: "2Y", folder: "YellowItems", type: "Aura", terrain: "", trait: "", power: "", description: "P: If you control Red Dwarf Fides > All your Item are linked to any Fides > All your Item +2 Melee power" },
+        { id: "YA006", name: "Shared Beliefs", subName: "", level: "2", Cost: "2Y", folder: "YellowItems", type: "Aura", terrain: "", trait: "", power: "", description: "1. A: You execute 1 Soldier Token per Holy and per General Fides you Control 2. C: When your non-Ace Priest Fides Tap > You execute 1 Solider Token" },
+        ];
+
+        // Loop through cardData and create card elements with image paths
+        cardData.forEach(card => {
+            const imagePath = `${basePath}${card.folder}/${card.id}.png`; // Construct image path
+            const cardHtml = `
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                <div class="card-container">
+                    <div class="card">
+                        <button class="card-button">
+                            <img src="${imagePath}" class="card-img-top" alt="${card.name}">
+                            <div class="card-text">
+                                <p>${card.description}</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            // Append card HTML to card container
+            cardContainer.innerHTML += cardHtml;
+        });
+
+        // Add hover behavior to each card image
+        const cardContainers = document.querySelectorAll(".card-container");
+        const cardImages = document.querySelectorAll(".card-button");
+        cardContainers.forEach(container => {
+            const cardText = container.querySelector(".card-text");
+            //const cardText = image.nextElementSibling; // Get the card-text element (sibling of the image)
+
+            // Show card text on image hover
+            container.addEventListener("mouseenter", () => {
+                cardText.style.opacity = "1";
+                cardText.style.zIndex = "1";
+            });
+
+            // Hide card text when mouse leaves the image
+            container.addEventListener("mouseleave", () => {
+                cardText.style.opacity = "0";
+                cardText.style.zIndex = "0";
+            });
+
+            container.addEventListener("click", () => {
+            const cardIndex = Array.from(cardContainers).indexOf(container); // Get the index of the clicked card
+            const selectedCard = cardData[cardIndex]; // Get the corresponding card data
+            openModal(selectedCard); // Open modal with selected card data
+            });
+        });
+
+        ScrollReveal().reveal(cardContainers, { interval: 20, reset: true });
+    });
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>-RE- AETHERIUS</title>
+    </head>
+    <body style="background-color: #f7edcf;">
+
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
+    <a class="navbar-brand" href="https://recardgame.wordpress.com/"><img src="logo.png" alt="Logo" style="width: 30px; height: 30px;">  -RE- AETHERIUS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav"></ul>
+    </div>
+</nav>
+
+<!-- Banner Area -->
+<div class="container-fluid" style="padding-top: 59px;">
+    <div class="row">
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-blue" href="./BlueItems.html"><span class="hover-text">Blue</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-green" href="./GreenItems.html"><span class="hover-text">Green</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-purple" href="./PurpleItems.html"><span class="hover-text">Purple</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-red" href="./RedItems.html"><span class="hover-text">Red</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-white" href="./WhiteItems.html"><span class="hover-text">White</span></a>
+        <a class="col-lg-4 col-md-6 col-sm-12 banner-section banner-yellow" href="./YellowItems.html"><span class="hover-text">Yellow</span></a>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="container-fluid">
+    <!-- Sub-class buttons-->
+    <div class="d-flex justify-content-center align-items-center vh-20">
+        <h1 class="d-flex gap-2 button-container">
+            <a href="./YellowFides.html" class="hvr-underline-from-center">FIDES</a>
+            <a href="./YellowItems.html" class="hvr-underline-from-center selected">ITEMS</a>
+        </h1>
+    </div>
+    <div class="row" id="cardDisplay">
+        <!-- Card display area will be dynamically populated here -->
+        <!-- Example: -->
+        <!-- <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card Sub-Name</h6>
+                    <p class="card-text">Card Description</p>
+                    <!-- Add more card details here -->
+                <!-- </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<div id="myModal" class="modal" >
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="background-color: #f7edcf;">
+            <div class="row">
+                <div class="col-md-6">
+                    <img id="modalImg" src="" alt="Card Image" class="img-fluid">
+                </div>
+                <div class="col-md-6" id="modalDescriptionWindow">
+                  <!-- Detailed card description will be displayed here -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-description py-4 px-4" id="modalDescription">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
