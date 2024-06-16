@@ -153,3 +153,10 @@ background-color: #F9ECC3; /* Change this to your desired background color */
     font-size: 48px; /* Increase font size on hover */
     font-weight: 500;
 }
+
+.modal-content {
+    padding: 20px;
+    border: 1px solid #888;
+    max-height: 95vh; /* Limit height to 70% of viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
