@@ -32,15 +32,15 @@
 .custom-table tbody,
 .custom-table th,
 .custom-table td {
-border: 2px solid #c9c0a1;
+border: 2px solid #343a40;
 }
 
 /* Background color for left column */
 .custom-table tbody th:first-child {
-background-color: #EDE0B9; /* Change this to your desired background color */
+background-color: #cdcdcd; /* Change this to your desired background color */
 }
 .custom-table tbody td {
-background-color: #F9ECC3; /* Change this to your desired background color */
+background-color: #ffffff; /* Change this to your desired background color */
 }
 
 /*buttons*/
@@ -50,7 +50,7 @@ background-color: #F9ECC3; /* Change this to your desired background color */
 }
 .button-container a {
     text-decoration: none;
-    color: black;
+    color: rgb(255, 255, 255);
     font-size: 36px;
 }
 .button-container a.selected {
